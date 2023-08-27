@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "The app accesses your photos to let you attach them with your todos."
+        }
+      ]
+    ],
+    "name": "part-two-final",
+    "scheme": "part-two-final",
+    "slug": "part-two-final",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+  }
+}

@@ -1,6 +1,8 @@
 # Tiktok-Hack
+
 In order to run the app, follow these instructions:
 
+早上好！
 Clone the github repository into your laptop's terminal/command prompt: https://github.com/kyledilao777/Tiktok-Hack
 Download all the dependencies using npm install.
 Please send in a request for the private supabase API key and URL, so that the app can be launched.

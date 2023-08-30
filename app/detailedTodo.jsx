@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from "expo-router";
-import { View, Image } from "react-native";
+import { SafeAreaView, Image, } from "react-native";
 import { supabase } from "../lib/supabase";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Text } from "react-native-paper";
@@ -24,10 +24,11 @@ export default function EditTodoPage() {
         return <ActivityIndicator />
     }
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <SafeAreaView>
+            <Text> Tasks </Text>
             <Text>{todo.task}</Text>
             {todo.image_url && <Image source={{ uri: todo.image_url }} style={{ height: 200, width: 200 }} />}
             <Link href="/">Go Back</Link>
-        </View>
+        </SafeAreaView>
     )
 }

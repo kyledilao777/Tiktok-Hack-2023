@@ -3815,6 +3815,13 @@ expo-constants@*, expo-constants@^14.4.2, expo-constants@~14.4.2:
     "@expo/config" "~8.1.0"
     uuid "^3.3.2"
 
+expo-contacts@^12.2.0:
+  version "12.2.0"
+  resolved "https://registry.npmjs.org/expo-contacts/-/expo-contacts-12.2.0.tgz"
+  integrity sha512-ZVRbF3OEGQ02nwwqaBxEic761mio8+GHo8I6jy/UQ5CF5azauY+2LUA5JskmuZbBAZMqZfhkbnZ56w8RXXcE5A==
+  dependencies:
+    uuid "^3.4.0"
+
 expo-file-system@~15.4.0, expo-file-system@~15.4.3:
   version "15.4.3"
   resolved "https://registry.npmjs.org/expo-file-system/-/expo-file-system-15.4.3.tgz"

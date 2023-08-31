@@ -32,7 +32,7 @@ export default function LoginPage() {
   };
   return (
     <View style={{ flex: 1, justifyContent: "center" }}>
-      <Text className="text-white">Email</Text>
+      <Text>Email</Text>
       <TextInput
         autoCapitalize="none"
         textContentType="emailAddress"

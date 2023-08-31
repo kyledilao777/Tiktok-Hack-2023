@@ -6,11 +6,17 @@
         {
           "cameraPermission": "The app accesses your photos to let you attach them with your todos."
         }
+      ],
+      [
+        "expo-contacts",
+        {
+          "contactsPermission": "Allow $(PRODUCT_NAME) to access your contacts."
+        }
       ]
     ],
-    "name": "part-two-final",
-    "scheme": "part-two-final",
-    "slug": "part-two-final",
+    "name": "TikTok Hack",
+    "scheme": "TikTok Hack",
+    "slug": "TikTok Hack",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,9 +26,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -34,6 +38,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
+    }
   }
 }

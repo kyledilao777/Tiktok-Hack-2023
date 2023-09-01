@@ -4,11 +4,19 @@ import { Text, TextInput, Button, ActivityIndicator } from "react-native-paper";
 import { Link } from "expo-router";
 import { supabase } from "../../lib/supabase";
 
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
+
+  const variantstyles = {
+    default: "rounded bg-white",
+    primary: "bg-blue-500 text-white",
+    secondary: "bg-white-500 text-black",
+  };
+  
   const handleSubmit = async () => {
     setErrMsg("");
     if (email == "") {
@@ -32,12 +40,16 @@ export default function LoginPage() {
   };
   return (
     <View className="flex-1 justify-center bg-black/80 ">
+      <View className="flex mx-auto mb-4">
       <Image
-        className="mb-12 w-48 h-14 justify-center mx-auto"
+        className="w-48 h-14 mx-auto"
         source={require("../../assets/whitetiktok.png")}
       />
+      <Text className="text-white text-md text-right font-lato">E-commerce</Text>
+      </View>
       <View className="m-6">
-        <Text className=" text-slate-100 font-calibri text-[16px] mb-1">
+        
+        <Text className=" text-slate-100 font-lato text-[16px] mb-1">
           Email
         </Text>
         <TextInput
@@ -47,7 +59,7 @@ export default function LoginPage() {
           value={email}
           onChangeText={setEmail}
         />
-        <Text className="text-slate-100 font-calibri text-[16px] mb-1">
+        <Text className="text-slate-100 font-lato text-[16px] mb-1">
           Password
         </Text>
         <TextInput
@@ -58,12 +70,13 @@ export default function LoginPage() {
           value={password}
           onChangeText={setPassword}
         />
-        <Button onPress={handleSubmit}>Submit</Button>
+        <Button className="bg-white"onPress={handleSubmit}>Submit</Button>
         {errMsg !== "" && <Text>{errMsg}</Text>}
         {loading && <ActivityIndicator />}
+
       </View>
       <Link href="/register" className="mt-2 ml-4">
-        <Button>Not registered yet?</Button>
+        <Button className="text-white">Not registered yet?</Button>
       </Link>
     </View>
   );

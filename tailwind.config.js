@@ -6,6 +6,7 @@ module.exports = {
     fontFamily: {
       calibri: ["Calibri"],
       regencie: ["Regencie"],
+      lato: ["Lato"],
     },
   },
   plugins: [],

@@ -7,6 +7,7 @@ export default function RootLayout() {
   const [fontsLoaded] = useFonts({
     Calibri: require("../assets/fonts/Calibri-Bold.ttf"),
     Regencie: require("../assets/fonts/RegencieLight-M2gn.ttf"),
+    Lato: require("../assets/fonts/Lato-Bold.ttf")
   });
 
   const onLayoutRootView = useCallback(async () => {

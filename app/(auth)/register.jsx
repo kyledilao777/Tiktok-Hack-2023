@@ -61,39 +61,42 @@ export default function Register() {
     }
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-            <Text>First Name</Text>
+        <View className="flex-1 justify-center bg-black/80">
+            <Text className="text-white">First Name</Text>
             <TextInput
+                
                 autoCapitalize='none'
                 textContentType='givenName'
                 value={firstName}
                 onChangeText={setfName} />
-            <Text>Last Name</Text>
+            <Text className="text-white">Last Name</Text>
             <TextInput
                 autoCapitalize='none'
                 textContentType='familyName'
                 value={lastName}
                 onChangeText={setlName} />
-            <Text>Email</Text>
+            <View className="text-white">
+                <Text className="">Email</Text>
             <TextInput
                 autoCapitalize='none'
                 textContentType='emailAddress'
                 value={email}
                 onChangeText={setEmail} />
-            <Text>Password</Text>
+            <Text className="">Password</Text>
             <TextInput
                 secureTextEntry
                 autoCapitalize='none'
                 textContentType='password'
                 value={password}
                 onChangeText={setPassword} />
-            <Text>Phone Number</Text>
+            <Text className="">Phone Number</Text>
             <TextInput
                 returnKeyType={'done'}
                 keyboardType={'number-pad'} 
                 value={phoneNumber}
                 onChangeText={setNumber} 
             />
+            </View>
             <Button onPress={handleSubmit}>Submit</Button>
             {errMsg !== "" && <Text>{errMsg}</Text>}
             {loading && <ActivityIndicator />}

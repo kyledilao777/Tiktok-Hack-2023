@@ -48,8 +48,8 @@ export default function HomeScreen() {
       
       fetchBuyers();
       fetchContacts();
-    }, [contacts]); 
-    
+    }, [buyers, contacts]); 
+     
 
     const Item = ({title}) => ( 
       <View style={styles.item}>
@@ -69,8 +69,7 @@ export default function HomeScreen() {
             <FlatList
                 data={contacts}
                 renderItem={({item}) => <Item title={item} />}
-                onRefresh={() => setRefreshing(true)}
-                refreshing={refreshing}
+                keyExtractor={(item) => item.id}
             />
         </SafeAreaView>
     );

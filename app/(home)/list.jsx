@@ -7,7 +7,7 @@ import * as Contacts from 'expo-contacts';
 
 export default function HomeScreen() {
     const [contacts, setContacts] = useState([]);
-    const [filtered, setFiltered] = useState([]);
+    const [buyers, setBuyers] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const { productName } = useSearchParams();
     const router = useRouter();
@@ -58,23 +58,23 @@ export default function HomeScreen() {
         <TouchableOpacity onPress={() => router.push({ pathname:'payment', params:{productName: productName, friendName: title.firstName}})}>
           <Text> Payment </Text>
         </TouchableOpacity>
-      </View>
+      </View>           
     );
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ flex:1, backgroundColor:"white" }}>
             <Text style={{marginHorizontal:20, marginTop:20, marginBottom:10, }}>
               Assuming all contacts below are TikTok users, are on current device's contact list and are purchasing the {productName}.
             </Text>
             <FlatList
                 data={contacts}
                 renderItem={({item}) => <Item title={item} />}
-                keyExtractor={item => item.id}
+                onRefresh={() => setRefreshing(true)}
+                refreshing={refreshing}
             />
         </SafeAreaView>
     );
-}
-
+  } 
 
 
 

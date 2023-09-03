@@ -12,22 +12,46 @@ export default function HomeScreen() {
     const { productName } = useSearchParams();
     const router = useRouter();
 
+    
     useEffect(() => {
-        (async () => {
+      async function fetchBuyers() {
+        try {
+          const { data } = await supabase.from('products').select('buyer').eq('name', productName);
+    
+          const uniqueBuyers = Array.from(new Set(data.map(item => item.buyer)));
+    
+          setBuyers(uniqueBuyers);
+        } catch (error) {
+          // Handle any errors
+        }
+      }
+    
+      async function fetchContacts() {
+        try {
           const { status } = await Contacts.requestPermissionsAsync();
+    
           if (status === 'granted') {
             const { data } = await Contacts.getContactsAsync({
-              fields: [Contacts.Fields.PhoneNumbers]
+              fields: [Contacts.Fields.PhoneNumbers],
             });
-                
-            if (data.length > 0) {
-                setContacts(data);
-            }
+    
+            const matchedContacts = data.filter(contact =>
+              buyers.includes(contact.phoneNumbers[0]?.number)
+            );
+    
+            setContacts(matchedContacts);
           }
-        })();
-      }, []);
+        } catch (error) {
+          // Handle any errors
+        } 
+      }
+      
+      fetchBuyers();
+      fetchContacts();
+    }, [contacts]); 
+    
 
-    const Item = ({title}) => (
+    const Item = ({title}) => ( 
       <View style={styles.item}>
         <Text key={title.id} style={styles.title}>{title.firstName}</Text>
         <Text key={title.firstName} style={styles.title}>{title.phoneNumbers[0].number}</Text>
@@ -68,4 +92,4 @@ const styles = StyleSheet.create({
     title: {
       fontSize: 16,
     },
-});
+});  

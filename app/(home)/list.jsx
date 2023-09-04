@@ -36,7 +36,7 @@ export default function HomeScreen() {
             });
     
             const matchedContacts = data.filter(contact =>
-              buyers.includes(contact.phoneNumbers[0]?.number)
+              buyers.includes(contact.phoneNumbers[0].number)
             );
     
             setContacts(matchedContacts);
@@ -46,11 +46,10 @@ export default function HomeScreen() {
         } 
       }
       
-      fetchBuyers();
+      fetchBuyers(); 
       fetchContacts();
-    }, [buyers, contacts]); 
+    }, [contacts]); 
      
-
     const Item = ({title}) => ( 
       <View style={styles.item}>
         <Text key={title.id} style={styles.title}>{title.firstName}</Text>
@@ -70,12 +69,13 @@ export default function HomeScreen() {
                 data={contacts}
                 renderItem={({item}) => <Item title={item} />}
                 keyExtractor={(item) => item.id}
+
             />
         </SafeAreaView>
     );
   } 
 
-
+ 
 
 const styles = StyleSheet.create({
     container: {

@@ -56,7 +56,7 @@ export default function ProductList() {
     };
 
     const handleCart = async () => {
-        router.push("../checkout/indivcart");
+        router.push("checkout/indivcart");
     }
 
 

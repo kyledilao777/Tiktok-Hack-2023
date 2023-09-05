@@ -94,108 +94,122 @@ export default function IndivCheckout() {
     }
 
         return (
-            <View>
-                <View style={styles.header}>
-                    <Text>Items Ordered</Text>
+            <View className="flex-1 bg-black/80">
+                <View className="justify-center align-middle" style={styles.header}>
+                    <Text className="text-white font-lato text-lg">Items Ordered</Text>
                 </View>
-                <View style={styles.product}>
+                <View className="mt-10">
+                <View style={styles.product} className="">
                     <View style={styles.productInfo}>
-                        <Text style={{ fontWeight: 'bold', textDecorationLine: 'underline' }}>Products</Text>
+                        <Text className="text-white font-lato" style={{ fontWeight: 'bold', color: "white" }}>Products</Text>
                     </View>
                     <View style={styles.groupOrder}>
-                        <Text style={{ fontWeight: 'bold' }}>Quantity</Text>
+                        <Text className="text-white font-lato mr-7" style={{ fontWeight: 'bold', color: "white"}}>Quantity</Text>
                     </View>
                     <View style={styles.quantityOrdered}>
-                        <Text style={{ fontWeight: 'bold' }}>Total Price</Text>
+                        <Text className="text-white font-lato" style={{ fontWeight: 'bold', color: "white"}}>Total Price</Text>
                     </View>
                 </View>
                 {ownProducts.map((product, index) => (
                     <View key={index} style={styles.product}>
                         <View style={styles.productInfo}>
-                            <Text>{product.name}</Text>
+                            <Text className="text-white font-lato mt-3">{product.name}</Text>
                         </View>
                         <View style={styles.groupOrder}>
-                            <Text>{product.quantity}</Text>
+                            <Text className="text-white font-lato mt-3">{product.quantity}</Text>
                         </View>
                         <View style={styles.payment}>
-                            <Text>${product.quantity * product.price}</Text>
-                        </View>
+                            <Text className="text-white font-lato ml-5 mt-3">${product.quantity * product.price}</Text>
+                        </View> 
                     </View>))}
                 <View>
                     <TouchableOpacity
                         style={{
                             alignSelf: "flex-end",
                             marginRight: 20,
-                            marginTop: 10,
-                            borderColor: 'black',
+                            marginTop: 20,
+                            borderColor: '#69C9D0',
                             borderWidth: 2,
+                            
                             paddingHorizontal: 5,
                             paddingVertical: 2,
                             width: 95,
-                            backgroundColor: 'yellow'
+                            backgroundColor: '#69C9D0'
                         }}
                         onPress={handleOwnPay}
                     >
-                        <Text> Pay </Text>
+                        <Text className="text-white font-lato"> Pay </Text>
                     </TouchableOpacity>
 
                 </View>
-                <View style={styles.header2}>
-                    <Text> Pending Group Order Purchase:</Text>
                 </View>
+                <View className="mt-10">
+                
+                <View style={styles.header2}>
+                    <Text className="text-white font-lato text-lg"> Pending Group Order Purchase</Text>
+                </View>
+
+                <View className="mt-10">
                 <View style={styles.product}>
                     <View style={styles.productInfo}>
-                        <Text style={{ fontWeight: 'bold', textDecorationLine: 'underline' }}>Products</Text>
+                        <Text className="text-white font-lato" style={{ fontWeight: 'bold',}}>Products</Text>
                     </View>
                     <View style={styles.groupOrder}>
-                        <Text style={{ fontWeight: 'bold' }}>Quantity</Text>
+                        <Text className="text-white font-lato mr-7" style={{ fontWeight: 'bold' }}>Quantity</Text>
                     </View>
                     <View style={styles.quantityOrdered}>
-                        <Text style={{ fontWeight: 'bold' }}>Total Price</Text>
+                        <Text className="text-white font-lato" style={{ fontWeight: 'bold' }}>Total Price</Text>
                     </View>
                 </View>
                 {group.map((product, index) => (
                     <View key={index} style={styles.product}>
                         <View style={styles.productInfo}>
-                            <Text>{product.name}</Text>
+                            <Text className="text-white font-lato mt-3">{product.name}</Text>
                         </View>
                         <View style={styles.groupOrder}>
-                            <Text>{product.quantity}</Text>
+                            <Text className="text-white font-lato mt-3">{product.quantity}</Text>
                         </View>
                         <View style={styles.payment}>
-                            <Text>${product.quantity * product.price}</Text>
+                            <Text className="text-white font-lato ml-5 mt-3">${product.quantity * product.price}</Text>
                         </View>
                     </View>))}
                 <TouchableOpacity
                     style={{
                         alignSelf: "flex-end",
                         marginRight: 20,
-                        marginTop: 10,
-                        borderColor: 'black',
+                        marginTop: 20,
+                        borderColor: '#69C9D0',
                         borderWidth: 2,
                         paddingHorizontal: 5,
                         paddingVertical: 2,
                         width: 95,
-                        backgroundColor: 'yellow'
+                        backgroundColor: '#69C9D0'
                     }}
                     onPress={handleGroupPay}
                 >
-                    <Text> Pay </Text>
+                    <Text className="text-white font-lato"> Pay </Text>
                 </TouchableOpacity>
+                </View>
+                </View>
             </View>
         )
     }
 
     const styles = StyleSheet.create({
         header: {
-            backgroundColor: "pink",
+            backgroundColor: "#EE1D52",
+            justifyContent: "center",
+            alignItems: "center"
         },
         header2: {
-            backgroundColor: 'lightblue',
+            backgroundColor: '#EE1D52',
             marginTop: 20,
+            justifyContent: "center",
+            alignItems: "center"
         },
         product: {
             flexDirection: "row",
+
         },
         productInfo: {
             flex: 1,

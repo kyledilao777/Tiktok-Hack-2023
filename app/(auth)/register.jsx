@@ -77,20 +77,20 @@ export default function Register() {
                 value={lastName}
                 onChangeText={setlName} />
             <View className="text-white">
-                <Text className="">Email</Text>
+                <Text className="text-white">Email</Text>
             <TextInput
                 autoCapitalize='none'
                 textContentType='emailAddress'
                 value={email}
                 onChangeText={setEmail} />
-            <Text className="">Password</Text>
+            <Text className="text-white">Password</Text>
             <TextInput
                 secureTextEntry
                 autoCapitalize='none'
                 textContentType='password'
                 value={password}
                 onChangeText={setPassword} />
-            <Text className="">Phone Number</Text>
+            <Text className="text-white">Phone Number</Text>
             <TextInput
                 rautoCapitalize='none'
                 textContentType='telephoneNumber'

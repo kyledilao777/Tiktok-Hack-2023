@@ -61,11 +61,12 @@ export default function HomeScreen() {
     );
 
     return (
-        <SafeAreaView style={{ flex:1, backgroundColor:"white" }}>
-            <Text style={{marginHorizontal:20, marginTop:20, marginBottom:10, }}>
+        <SafeAreaView style={{ flex:1, }} className="bg-black/80">
+            <Text style={{marginHorizontal:20, marginTop:20, marginBottom:10, }} className="text-white">
               Assuming all contacts below are TikTok users, are on current device's contact list and are purchasing the {productName}.
             </Text>
             <FlatList
+            
                 data={contacts}
                 renderItem={({item}) => <Item title={item} />}
                 keyExtractor={(item) => item.id}
@@ -87,6 +88,7 @@ const styles = StyleSheet.create({
       padding: 20,
       marginVertical: 8,
       marginHorizontal: 16,
+      
     },
     title: {
       fontSize: 16,

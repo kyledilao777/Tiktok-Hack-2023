@@ -157,7 +157,6 @@ export default function ProductList() {
             </View>
             <Text className="text-white text-lg font-bold mt-5">Products Available</Text>
             <View className="flex-row mt-5">
-                
                 <TouchableOpacity>
                     <Image className="w-[200px] h-[200px] mx-auto" source={require('../../assets/ucok.png')} /> 
                     <Text className="text-xl  text-white font-calibri mx-auto"> {productName}</Text>
@@ -166,8 +165,6 @@ export default function ProductList() {
                     <Image className="w-[200px] h-[200px] mx-auto" source={require('../../assets/ucok.png')} /> 
                      <Text className="text-xl  text-white font-calibri mx-auto"> {productName}</Text>
                 </TouchableOpacity>
-                
-
             </View>
             <View>
                 <TouchableOpacity

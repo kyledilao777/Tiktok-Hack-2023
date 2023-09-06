@@ -4,9 +4,11 @@ import { supabase } from '../../lib/supabase';
 import { Button, TextInput } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import { useAuth } from '../../contexts/auth'
+import { useNavigation } from '@react-navigation/native';
 
 export default function ProductList() {
     const router = useRouter();
+    const navigation = useNavigation();
     const { user } = useAuth();
     const [productName, setProductName] = useState("Hand Wash");
 

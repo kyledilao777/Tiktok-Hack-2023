@@ -46,6 +46,7 @@ export default function LoginPage() {
   }
   return (
     <View className="flex-1 justify-center bg-black/80 ">
+      <View className="mb-8">
       <View className="flex mx-auto mb-4">
       <Image
         className="w-48 h-14 mx-auto"
@@ -92,6 +93,7 @@ export default function LoginPage() {
           {errMsg !== "" && <Text>{errMsg}</Text>}
           {loading && <ActivityIndicator />}
 
+        </View>
         </View>
         
 

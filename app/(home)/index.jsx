@@ -60,8 +60,8 @@ export default function ProductList() {
     const handleCart = async () => {
         router.push("Checkout/indivcart");
     }
-
-
+    
+    
     return (
         <ScrollView className="align-middle flex-1 bg-black/80">
             
@@ -126,9 +126,9 @@ export default function ProductList() {
                             <Text className="text-white font-calibri"> View Cart </Text>
                         </TouchableOpacity>
                     </View>
-
-                    
-
+                                                                                 
+                                                                                 
+                                                                                 
                     <View>
                         <TouchableOpacity
                             style={{
@@ -186,8 +186,8 @@ export default function ProductList() {
                 </TouchableOpacity>
             </View>
 
-            
-           
+
+
         </ScrollView>
 
     );

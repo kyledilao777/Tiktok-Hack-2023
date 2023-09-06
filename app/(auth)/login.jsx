@@ -1,8 +1,9 @@
-import { View, Image } from "react-native";
+import { View, Image, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import { Text, TextInput, Button, ActivityIndicator } from "react-native-paper";
 import { Link } from "expo-router";
 import { supabase } from "../../lib/supabase";
+import { useRouter } from "expo-router";
 
 
 export default function LoginPage() {
@@ -10,6 +11,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
+  const router = useRouter();
 
   const variantstyles = {
     default: "rounded bg-white",
@@ -38,6 +40,10 @@ export default function LoginPage() {
       return;
     }
   };
+
+  const handleRegister = () => {
+    router.push("register")
+  }
   return (
     <View className="flex-1 justify-center bg-black/80 ">
       <View className="flex mx-auto mb-4">
@@ -70,11 +76,30 @@ export default function LoginPage() {
           value={password}
           onChangeText={setPassword}
         />
-        <Button className="bg-white"onPress={handleSubmit}>Submit</Button>
-        {errMsg !== "" && <Text>{errMsg}</Text>}
-        {loading && <ActivityIndicator />}
+
+        <View className="flex-row">
+          
+
+          <TouchableOpacity onPress={handleRegister}>
+            <Text className="text-white font-lato">Not registered yet?</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={handleSubmit} className="border-white pl-40">
+            <Text className="text-white font-lato">Submit</Text>
+          </TouchableOpacity>
+      
+        
+          {errMsg !== "" && <Text>{errMsg}</Text>}
+          {loading && <ActivityIndicator />}
+
+        </View>
+        
 
       </View>
+
+      
+      
+    
       <Link href="/register" className="mt-2 ml-4">
         <Button className="text-white">Not registered yet?</Button>
       </Link>

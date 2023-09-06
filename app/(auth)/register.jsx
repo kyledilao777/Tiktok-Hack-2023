@@ -98,6 +98,8 @@ export default function Register() {
                 onChangeText={setNumber} 
             />
             </View>
+
+            
             <Button onPress={handleSubmit}>Submit</Button>
             {errMsg !== "" && <Text>{errMsg}</Text>}
             {loading && <ActivityIndicator />}

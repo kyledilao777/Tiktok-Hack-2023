@@ -56,12 +56,13 @@ export default function ProductList() {
     };
 
     const handleCart = async () => {
-        router.push("checkout/indivcart");
+        router.push("Checkout/indivcart");
     }
 
 
     return (
-        <View className="justify-center align-middle flex-1 bg-black/80">
+        <SafeAreaView className="justify-center align-middle flex-1 bg-black/80">
+            
             <View className="">
                 <View className="">
                      <Image className="w-[200px] h-[400px] mx-auto" source={require('../../assets/ucok.png')} />
@@ -110,6 +111,8 @@ export default function ProductList() {
                 </View>
 
                 <View>
+                
+
                 <TouchableOpacity
                 style={{
                     alignSelf: "flex-end",
@@ -127,7 +130,7 @@ export default function ProductList() {
                 className="text-white"
                 onPress={handleCart}
             >
-                <Text className="text-white font-calibri"> View Cart </Text>
+                    <Text className="text-white font-calibri"> View Cart </Text>
                 </TouchableOpacity>
                 </View>
             </View>
@@ -143,13 +146,13 @@ export default function ProductList() {
                     width: 95,
                     justifyContent: "center",
                     alignItems: "center",
-                    marginRight: 136,
+                    marginRight: 251
                 }}onPress={async () => {await supabase.auth.signOut()}}>
                 <Text className="text-white font-calibri">Log Out</Text>
             </TouchableOpacity>
             </View>
            
-        </View>
+        </SafeAreaView>
 
     );
 }

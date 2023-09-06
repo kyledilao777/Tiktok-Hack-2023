@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { supabase } from "../../lib/supabase";
-import { View } from "react-native";
+import { View, TouchableOpacity, Image } from "react-native";
 import { Text, TextInput, ActivityIndicator, Button } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 
@@ -62,35 +62,47 @@ export default function Register() {
         } 
     }
 
+    const handleSubmitRegister = () => {
+        router.push("login");
+
+    }
+
     return (
         <View className="flex-1 justify-center bg-black/80">
-            <Text className="text-white">First Name</Text>
+            <View className="flex mx-auto mb-4">
+            <Image
+                className="w-48 h-14 mx-auto"
+                source={require("../../assets/whitetiktok.png")}
+            />
+            <Text className="text-white text-md text-right font-lato">E-commerce</Text>
+            </View>
+            <Text className="text-white font-lato">First Name</Text>
             <TextInput
                 autoCapitalize='none'
                 textContentType='givenName'
                 value={firstName}
                 onChangeText={setfName} />
-            <Text className="text-white">Last Name</Text>
+            <Text className="text-white font-lato">Last Name</Text>
             <TextInput
                 autoCapitalize='none'
                 textContentType='familyName'
                 value={lastName}
                 onChangeText={setlName} />
-            <View className="text-white">
+            <View className="text-white font-lato">
                 <Text className="text-white">Email</Text>
             <TextInput
                 autoCapitalize='none'
                 textContentType='emailAddress'
                 value={email}
                 onChangeText={setEmail} />
-            <Text className="text-white">Password</Text>
+            <Text className="text-white font-lato">Password</Text>
             <TextInput
                 secureTextEntry
                 autoCapitalize='none'
                 textContentType='password'
                 value={password}
                 onChangeText={setPassword} />
-            <Text className="text-white">Phone Number</Text>
+            <Text className="text-white font-lato">Phone Number</Text>
             <TextInput
                 rautoCapitalize='none'
                 textContentType='telephoneNumber'
@@ -99,10 +111,24 @@ export default function Register() {
             />
             </View>
 
+            <TouchableOpacity onPress={handleSubmit} className="mx-auto mt-5">
+                <Text className="text-white font-lato">
+                    Submit
+                </Text>
+            </TouchableOpacity>
             
-            <Button onPress={handleSubmit}>Submit</Button>
+
             {errMsg !== "" && <Text>{errMsg}</Text>}
             {loading && <ActivityIndicator />}
+
+            <View>
+                <TouchableOpacity className="align-bottom justify-center" onPress={handleSubmitRegister}>
+
+                    <Text className="text-white font-lato"> Back </Text>
+                </TouchableOpacity>
+
+            </View>
+            
         </View> 
     );
 }

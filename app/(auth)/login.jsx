@@ -78,7 +78,7 @@ export default function LoginPage() {
 
           <TouchableOpacity
             onPress={handleSubmit}
-            className="border-white w-full bg-bgred py-2 rounded-lg"
+            className="border-white w-full bg-bgred py-3 rounded-lg"
           >
             {loading ? (
               <ActivityIndicator className="mx-auto" />

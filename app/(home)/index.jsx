@@ -5,6 +5,8 @@ import { Button, TextInput } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import { useAuth } from '../../contexts/auth'
 import { useNavigation } from '@react-navigation/native';
+import { LogOut, ShoppingCart, Users, ShoppingBasket} from 'lucide-react-native';
+
 
 export default function ProductList() {
     const router = useRouter();
@@ -64,106 +66,127 @@ export default function ProductList() {
 
     return (
         <ScrollView className="align-middle flex-1 bg-black/80">
-            
-            <View className="">
-                <View>
-                    <TouchableOpacity style={{
-                            alignSelf: "flex-start",
-                            marginRight: 10,
-                            marginTop: 10,
-                            borderColor: 'white',
-                            borderWidth: 2,
-                            paddingHorizontal: 5,
-                            paddingVertical: 2,
-                            width: 95,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            marginRight: 251
-                        }}onPress={async () => {await supabase.auth.signOut()}}>
-                        <Text className="text-white font-calibri">Log Out</Text>
-                    </TouchableOpacity>
+            <View className="h-16 bg-bgred">
+                <View className="flex flex-row mt-1 justify-between mx-4">
+                        <TouchableOpacity 
+                            className="mt-6"
+                            onPress={handleCart}> 
+                            <ShoppingCart color="white" size={22} />
+                        </TouchableOpacity>
+                        <Image
+                        className="w-24 h-7 mt-5"
+                        source={require("../../assets/whitetiktok.png")}
+                        />
+                        <TouchableOpacity
+                                className="mt-6"
+                                onPress={async () => {await supabase.auth.signOut()}}
+                                >
+                            <LogOut color="white" size={22}/>
+                        </TouchableOpacity>
                 </View>
-                <View className="flex-row mt-16 justify-center">
-                    <View className="">
-                    
+            </View>
+
+           
+            
+            <View className="m-4">
+                <TextInput className="h-12">
                 
+                </TextInput>
+                <View className="flex-row justify-center rounded-b-lg bg-bgblue space-x-12 py-2" >
+                    <View className="">
                         <TouchableOpacity 
                             style={{ 
-                                alignSelf: "flex-start", 
+                                justifyContent: "center",
+                                alignItems:"center", 
                                 marginRight: 10, 
                                 marginTop: 10, 
-                                borderColor: "white",
+                                borderColor: "#69C9D0",
                                 borderWidth: 2, 
                                 paddingHorizontal: 5, 
                                 paddingVertical: 2, 
                                 width: 95, }}
                                 onPress={() => router.push({ pathname: 'list', params: { productName: productName } })}>
-                                    <Image className="w-[20px] h-[40px] mx-auto" source={require('../../assets/ucok.png')} />
-                                    <Text className="text-white font-calibri align-middle justify-center pl-1"> Find friends </Text>
+                                    <Users color="white" size={24} />
+                                    <Text className="text-white font-calibri align-middle justify-center pl-1 mt-2"> Find Friends </Text>
                         </TouchableOpacity>
                     </View>
-                    <View>
-                        <TouchableOpacity
-                            style={{
-                            alignSelf: "flex-end",
-                            marginRight: 10,
-                            marginTop: 10,
-                            borderColor: 'white',
-                            borderWidth: 2,
-                            paddingHorizontal: 5,
-                            paddingVertical: 2,
-                            width: 95,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            backgroundColor: ""
-                            }}
-                            className="text-white"
-                            onPress={handleCart}
-                            >
-
-                            <Image className="w-[20px] h-[40px] mx-auto" source={require('../../assets/ucok.png')} />
-                            
-                            <Text className="text-white font-calibri"> View Cart </Text>
-                        </TouchableOpacity>
-                    </View>
+                    
 
                     
 
                     <View>
                         <TouchableOpacity
                             style={{
-                            alignSelf: "flex-end",
-                            marginRight: 10,
-                            marginTop: 10,
-                            borderColor: 'white',
-                            borderWidth: 2,
-                            paddingHorizontal: 5,
-                            paddingVertical: 2,
-                            width: 95,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            backgroundColor: ""
+                                justifyContent: "center",
+                                alignItems:"center", 
+                                marginRight: 10, 
+                                marginTop: 10, 
+                                borderColor: "#69C9D0",
+                                borderWidth: 2, 
+                                paddingHorizontal: 5, 
+                                paddingVertical: 2, 
+                                width: 95,
                             }}
                             className="text-white"
                             onPress={handleCart}
                             >
-                            <Image className="w-[20px] h-[40px] mx-auto" source={require('../../assets/ucok.png')} />
-                            <Text className="text-white font-calibri"> Group Page </Text>
+                            <ShoppingBasket color="white" size={24} />
+                            <View className="flex-row mt-2"> 
+                                <Text className="text-white font-calibri"> Group </Text>
+                                <Text className="text-white font-calibri">Purchase</Text>
+                            </View>
+                            
                         </TouchableOpacity>
                     </View>
                 </View>
                 
                
             </View>
-            <Text className="text-white text-lg font-bold mt-5">Products Available</Text>
-            <View className="flex-row mt-5">
+           
+            <View className="flex-row grid-rows-3 justify-between m-4">
                 <TouchableOpacity>
-                    <Image className="w-[200px] h-[200px] mx-auto" source={require('../../assets/ucok.png')} /> 
-                    <Text className="text-xl  text-white font-calibri mx-auto"> {productName}</Text>
+                    <View className="bg-bgblue flex-1 align-middle h-60 w-40">
+                        <Image className="w-[200px] h-[194px] mx-auto" source={require('../../assets/ucok.png')} />
+
+                        
+                        <View className="flex flex-row mt-1 justify-between">
+                            <Text className="text-white font-lato">Price</Text>
+                            <Text className="text-white font-lato">$15</Text>
+                        </View>
+
+                        <View className="flex flex-row mt-1 justify-between">
+                            <Text className="text-white text-md font-lato">Owner Name</Text>
+                            <Text className="text-white font-lato"> Udin</Text>
+                        </View>
+                        
+                        
+
+
+                    </View>
+                
+                    
                 </TouchableOpacity>
-                <TouchableOpacity className="justify-center align-middle">
-                    <Image className="w-[200px] h-[200px] mx-auto" source={require('../../assets/ucok.png')} /> 
-                     <Text className="text-xl  text-white font-calibri mx-auto"> {productName}</Text>
+                <TouchableOpacity>
+                    <View className="bg-bgblue flex-1 align-middle h-60 w-40">
+                        <Image className="w-[200px] h-[194px] mx-auto" source={require('../../assets/ucok.png')} />
+
+                        
+                        <View className="flex flex-row mt-1 justify-between">
+                            <Text className="text-white font-lato">Price</Text>
+                            <Text className="text-white font-lato">$15</Text>
+                        </View>
+
+                        <View className="flex flex-row mt-1 justify-between">
+                            <Text className="text-white font-lato">Owner Name</Text>
+                            <Text className="text-white font-lato"> Udin</Text>
+                        </View>
+                        
+                        
+
+
+                    </View>
+                
+                    
                 </TouchableOpacity>
             </View>
             <View>

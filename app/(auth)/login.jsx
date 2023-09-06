@@ -78,6 +78,8 @@ export default function LoginPage() {
           onChangeText={setPassword}
         />
 
+        {errMsg !== "" && <Text className="mb-3 text-white font-lato">**{errMsg}**!</Text>}
+
         <View className="flex-row">
           
 
@@ -85,7 +87,7 @@ export default function LoginPage() {
             <Text className="text-white font-lato">Not registered yet?</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={handleSubmit} className="border-white pl-40">
+          <TouchableOpacity onPress={handleSubmit} className="border-white pl-40 ">
             <Text className="text-white font-lato">Submit</Text>
           </TouchableOpacity>
       

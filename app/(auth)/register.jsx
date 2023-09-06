@@ -68,7 +68,8 @@ export default function Register() {
     }
 
     return (
-        <View className="flex-1 justify-center bg-black/80">
+        <View className="flex-1  bg-black/80">
+            <View className="mt-20 mb-5">
             <View className="flex mx-auto mb-4">
             <Image
                 className="w-48 h-14 mx-auto"
@@ -121,12 +122,13 @@ export default function Register() {
             {errMsg !== "" && <Text>{errMsg}</Text>}
             {loading && <ActivityIndicator />}
 
-            <View>
+            <View style={{marginTop: 65, marginLeft: 10}}>
                 <TouchableOpacity className="align-bottom justify-center" onPress={handleSubmitRegister}>
 
                     <Text className="text-white font-lato"> Back </Text>
                 </TouchableOpacity>
 
+            </View>
             </View>
             
         </View> 

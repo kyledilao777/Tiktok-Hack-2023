@@ -96,7 +96,7 @@ export default function IndivCheckout() {
         return (
             <View className="flex-1 bg-black/80">
                 <View className="justify-center align-middle" style={styles.header}>
-                    <Text className="text-white font-lato text-lg">Items Ordered</Text>
+                    <Text className="text-white font-lato text-lg mt-4">Items Ordered</Text>
                 </View>
                 <View className="mt-10">
                 <View style={styles.product} className="">
@@ -197,12 +197,12 @@ export default function IndivCheckout() {
 
     const styles = StyleSheet.create({
         header: {
-            backgroundColor: "#EE1D52",
+            
             justifyContent: "center",
             alignItems: "center"
         },
         header2: {
-            backgroundColor: '#EE1D52',
+            
             marginTop: 20,
             justifyContent: "center",
             alignItems: "center"

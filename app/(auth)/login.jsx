@@ -92,7 +92,7 @@ export default function LoginPage() {
           </TouchableOpacity>
       
         
-          {errMsg !== "" && <Text>{errMsg}</Text>}
+         
           {loading && <ActivityIndicator />}
 
         </View>

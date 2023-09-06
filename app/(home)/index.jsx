@@ -61,7 +61,7 @@ export default function ProductList() {
 
 
     return (
-        <SafeAreaView className="justify-center align-middle flex-1 bg-black/80">
+        <SafeAreaView className=" align-middle flex-1 bg-black/80">
             
             <View className="">
                 <View className="">
@@ -71,22 +71,25 @@ export default function ProductList() {
                 <View>
                     <Text className="text-xl  text-white font-calibri"> {productName}</Text>
                 </View>
-
-                <View>
-
-                    <Image style={{ width: "100%", height: 20, marginVertical: 20}} source={require('../../assets/banner.jpeg')} />
-                </View>
                 
-               
             
             </View>
-            <View className="flex-row justify-center ml-7">
-                <View>
+            <View className="flex-row ml-7">
+            <View>
 
                 <TouchableOpacity 
-            style={{ alignSelf: "flex-end", marginRight: 20, marginTop: 10, borderColor: 'white', borderWidth: 2, paddingHorizontal: 5, paddingVertical: 2, width: 95, }}
-                onPress={() => router.push({ pathname: 'list', params: { productName: productName } })}>
-                <Text className="text-white font-calibri align-middle justify-center pl-1"> Find friends </Text>
+                    style={{ alignSelf: "flex-end", 
+                            
+                            marginRight: 30, 
+                            marginTop: 10, 
+                            borderColor: '#EE1D52', 
+                            backgroundColor: "#EE1D52",
+                            borderWidth: 2, 
+                            paddingHorizontal: 5,
+                            paddingVertical: 2, 
+                            width: 95, }}
+                    className="rounded-lg" onPress={() => router.push({ pathname: 'list', params: { productName: productName } })}>
+                <Text className="text-white font-calibri align-middle justify-center pl-5">Friends </Text>
                 </TouchableOpacity>
                 </View>
 
@@ -94,17 +97,20 @@ export default function ProductList() {
                 <TouchableOpacity
                 style={{
                     alignSelf: "flex-end",
-                    marginRight: 20,
+                    marginRight: 25,
+                    marginLeft: 20,
                     marginTop: 10,
-                    borderColor: 'white',
+                    borderColor: '#EE1D52',
                     borderWidth: 2,
                     paddingHorizontal: 5,
                     paddingVertical: 2,
                     width: 95,
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
+                    backgroundColor: "#EE1D52"
                 }}
                 onPress={handleSubmit}
+                className="rounded-lg"
             >
                 <Text className="text-white font-calibri"> Add to Cart </Text>
                 </TouchableOpacity>
@@ -118,16 +124,16 @@ export default function ProductList() {
                     alignSelf: "flex-end",
                     marginRight: 20,
                     marginTop: 10,
-                    borderColor: 'white',
+                    borderColor: '#EE1D52',
                     borderWidth: 2,
                     paddingHorizontal: 5,
                     paddingVertical: 2,
                     width: 95,
                     justifyContent: "center",
                     alignItems: "center",
-                    backgroundColor: ""
+                    backgroundColor: "#EE1D52"
                 }}
-                className="text-white"
+                className="rounded-lg"
                 onPress={handleCart}
             >
                     <Text className="text-white font-calibri"> View Cart </Text>
@@ -135,19 +141,22 @@ export default function ProductList() {
                 </View>
             </View>
             <View>
-            <TouchableOpacity style={{
+            <TouchableOpacity 
+                    style={{
                     alignSelf: "flex-end",
                     marginRight: 20,
                     marginTop: 10,
-                    borderColor: 'white',
+                    borderColor: '#EE1D52',
                     borderWidth: 2,
                     paddingHorizontal: 5,
                     paddingVertical: 2,
                     width: 95,
                     justifyContent: "center",
                     alignItems: "center",
-                    marginRight: 251
-                }}onPress={async () => {await supabase.auth.signOut()}}>
+                    marginRight: 251,
+                    backgroundColor: "#EE1D52"
+                    
+                }}onPress={async () => {await supabase.auth.signOut()}} className="rounded-lg">
                 <Text className="text-white font-calibri">Log Out</Text>
             </TouchableOpacity>
             </View>

@@ -100,9 +100,7 @@ export default function LoginPage() {
       
       
     
-      <Link href="/register" className="mt-2 ml-4">
-        <Button className="text-white">Not registered yet?</Button>
-      </Link>
+      
     </View>
   );
 }

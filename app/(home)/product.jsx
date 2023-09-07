@@ -11,10 +11,11 @@ import { supabase } from "../../lib/supabase";
 import { Button, TextInput } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useAuth } from "../../contexts/auth";
+import { useRoute } from '@react-navigation/native';
 
 export default function ProductList() {
-  const router = useRouter();
-
+  const router = useRoute();
+  const { productName, uri } = router.params;
   const { user } = useAuth();
   const [productName2, setProductName] = useState("Hand Wash");
 
@@ -71,7 +72,7 @@ export default function ProductList() {
         <View className="">
           <Image
             className="w-[200px] h-[400px] mx-auto"
-            source={require("../../assets/ucok.png")}
+            source={uri}
           />
         </View>
 

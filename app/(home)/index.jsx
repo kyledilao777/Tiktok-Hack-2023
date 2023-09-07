@@ -141,6 +141,10 @@ export default function ProductList() {
     );
   };
 
+  const handleNavigation = ( productName, uri ) => {
+    navigation.navigate('product', { productName, uri })
+  }
+
   return (
     <SafeAreaView className="flex flex-1 bg-black/80">
       <View className="h-16">
@@ -209,6 +213,7 @@ export default function ProductList() {
             <TouchableOpacity
               key={index}
               className="bg-bgblack/50 h-56 w-[156px] rounded-lg sm:h-64 sm:w-[170px] md:h-[270px] md:w-[180px]"
+              onPress={() => handleNavigation(product.productName, product.uri)}
             >
               <Image
                 className="w-[156px] h-[180px] md:h-[243px] md:w-[190px] sm:w-[180px] sm:h-56 mx-auto rounded-t-lg"

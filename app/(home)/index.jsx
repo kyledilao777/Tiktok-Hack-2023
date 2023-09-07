@@ -6,7 +6,7 @@ import { useRouter } from 'expo-router';
 import { useAuth } from '../../contexts/auth'
 import { useNavigation } from '@react-navigation/native';
 import { LogOut, ShoppingCart, Users, ShoppingBasket} from 'lucide-react-native';
-import CustomHeader from '../../components/CustomHeader';
+
 
 
 export default function ProductList() {
@@ -152,7 +152,7 @@ export default function ProductList() {
             </View>
 
                 {products.map((product, index) => (
-                    <View className=" flex-wrap grid-rows-3 justify-between m-4">
+                    <View key={index} className=" flex-wrap grid-rows-3 justify-between m-4">
                         <TouchableOpacity>
                             <View className="bg-bgblue flex-1 align-middle h-60 w-40 m-2">
                                 <Image className="w-[124px] h-[194px] mx-auto" source={require('../../assets/ucok.png')} />

@@ -81,7 +81,6 @@ export default function ProductList() {
             {productName}
           </Text>
         </View>
-          
       </View>
       <View className="flex-row justify-center ml-7">
         <View>

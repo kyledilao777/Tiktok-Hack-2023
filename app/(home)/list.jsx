@@ -103,16 +103,17 @@ export default function HomeScreen() {
       <View className="h-16">
         <View className="flex flex-row justify-between mx-4">
           <View className="flex flex-row">
-            <TouchableOpacity className="mt-6 mr-16" onPress={() =>
-                navigation.navigate('index')
-              }>
-              <ArrowLeft color="white" size={24}/>
+            <TouchableOpacity
+              className="mt-6 mr-16"
+              onPress={() => navigation.navigate("index")}
+            >
+              <ArrowLeft color="white" size={24} />
             </TouchableOpacity>
           </View>
-          
+
           <View className="flex flex-row">
             <TouchableOpacity className="mt-6 mr-4" onPress={handleCart}>
-                <ShoppingCart color="white" size={22} />
+              <ShoppingCart color="white" size={22} />
             </TouchableOpacity>
             <TouchableOpacity
               className="mt-6"
@@ -122,15 +123,10 @@ export default function HomeScreen() {
             >
               <LogOut color="white" size={22} />
             </TouchableOpacity>
-
           </View>
-          
         </View>
       </View>
-      <Text
-  
-        className="text-white text-lg font-lato mx-4 my-4"
-      >
+      <Text className="text-white text-lg font-lato mx-4 my-4">
         {productName}
       </Text>
       <Text className=" text-white mx-4 font-lato">Contacts</Text>
@@ -154,7 +150,6 @@ const styles = StyleSheet.create({
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
-    
   },
   title: {
     fontSize: 16,

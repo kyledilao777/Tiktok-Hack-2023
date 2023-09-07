@@ -27,8 +27,9 @@ export default function ProductList() {
   const [search, setSearch] = useState("");
   const [productName, setProductName] = useState("Hand Wash");
   const [products, setProducts] = useState([
-    { productName: "evan", price: 15 },
+    { shopName: "asic", productName: "evan", price: 15 },
     { shopName: "ucok", productName: "banana", price: 23 },
+    { shopName: "ew", productName: "xerud", price: 69 }
   ]);
 
   const handleSubmit = async () => {
@@ -161,120 +162,28 @@ export default function ProductList() {
         </View>
       </View>
 
-      {products.map((product, index) => (
-        <View
-          key={index}
-          className=" flex-wrap grid-rows-3 justify-between m-4"
-        >
-          <TouchableOpacity>
-            <View className="bg-bgblue flex-1 align-middle h-60 w-40 m-2">
-              <Image
-                className="w-[124px] h-[194px] mx-auto"
-                source={require("../../assets/ucok.png")}
-              />
-
-              <View className="flex flex-row mt-1 justify-between">
-                <Text className="text-white font-lato">
-                  {product.productName}
-                </Text>
-                <Text className="text-white font-lato">{product.price}</Text>
-              </View>
-
-              <View className="flex flex-row mt-1 justify-between">
-                <Text className="text-white text-md font-lato">
-                  {product.shopName}
-                </Text>
-                <Text className="text-white font-lato"> Udin</Text>
-              </View>
+      <View className="grid grid-cols-2 gap-4 m-0">
+        {products.map((product, index) => (
+            <View key={index} className="bg-bgblue h-44 w-40 rounded-lg">
+                <Image
+                    className="w-[62px] h-[97px] mx-auto"
+                    source={require("../../assets/ucok.png")}
+                />
+                <View className="flex flex-row mt-1 justify-between">
+                    <Text className="text-white font-lato">
+                    {product.productName}
+                    </Text>
+                    <Text className="text-white font-lato">{product.price}</Text>
+                </View>
+                <View className="flex flex-row mt-1 justify-between">
+                    <Text className="text-white text-md font-lato">
+                    {product.shopName}
+                    </Text>
+                </View>  
             </View>
-          </TouchableOpacity>
-        </View>
       ))}
-
-      <View className="flex-row grid-rows-3 justify-between m-4">
-        <TouchableOpacity>
-          <View className="bg-bgblue flex-1 align-middle h-60 w-40">
-            <Image
-              className="w-[124px] h-[194px] mx-auto"
-              source={require("../../assets/ucok.png")}
-            />
-
-            <View className="flex flex-row mt-1 justify-between">
-              <Text className="text-white font-lato">Price</Text>
-              <Text className="text-white font-lato">$15</Text>
-            </View>
-
-            <View className="flex flex-row mt-1 justify-between">
-              <Text className="text-white text-md font-lato">Owner Name</Text>
-              <Text className="text-white font-lato"> Udin</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View className="bg-bgblue flex-1 align-middle h-60 w-40">
-            <Image
-              className="w-[124px] h-[194px] mx-auto"
-              source={require("../../assets/ucok.png")}
-            />
-
-            <View className="flex flex-row mt-1 justify-between">
-              <Text className="text-white font-lato">Price</Text>
-              <Text className="text-white font-lato">$15</Text>
-            </View>
-
-            <View className="flex flex-row mt-1 justify-between">
-              <Text className="text-white font-lato">Owner Name</Text>
-              <Text className="text-white font-lato"> {productName}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
       </View>
+
     </ScrollView>
   );
 }
-
-/*
-export default function ProductList() {
-    const router = useRouter();
-    const { user } = useAuth();
-    const [productName, setProductName] = useState("Hand Wash");
-
-    const handleSubmit = async () => {
-        const { error } = await supabase.from('products')
-            .insert({ 
-                name: productName, 
-                buyer: user.user_metadata.phone_number
-            })
-
-        if (error) {
-            console.log(error);
-        }
-
-        Alert.alert(
-            'Added to Cart!',
-            '',
-            [
-                {text: 'Ok'}
-            ]
-        )
-    }
-
-
-    return (
-        <SafeAreaView style={{ flex:1, backgroundColor:'white' }}>
-            <Text style={{ fontSize: 40, fontWeight: "bold", marginTop:10, marginLeft:10, }}> {productName}</Text>
-            <Image style={{ width:200, height:400, marginHorizontal:100, marginTop:50, }} source={require('../../assets/handwash.jpeg')} />
-            <Image style={{ width:"100%", height:20, marginVertical:20}} source={require('../../assets/banner.jpeg')} />
-            <TouchableOpacity style={{ alignSelf:"flex-end", marginRight:20, marginTop:10, borderColor:'black', borderWidth:2, paddingHorizontal:5, paddingVertical:2, width:95, }}
-                onPress={() => router.push({ pathname:'list', params: { productName: productName }})}>
-                <Text> Find friends </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ alignSelf:"flex-end", marginRight:20, marginTop:10, borderColor:'black', borderWidth:2, paddingHorizontal:5, paddingVertical:2, width:95, }} onPress={handleSubmit}>
-                <Text> Add to Cart </Text>
-            </TouchableOpacity> 
-            <Button onPress={async () => {await supabase.auth.signOut()}}> Logout  </Button>
-        </SafeAreaView>
-    )
-} */
-
-//<Image className="w-[200px] h-[400px] mx-auto" source={require('../../assets/ucok.png')} /> <View><Image style={{ width: "100%", height: 20, marginVertical: 20}} source={require('../../assets/banner.jpeg')} /></View>

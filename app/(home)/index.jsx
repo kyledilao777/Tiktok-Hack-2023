@@ -29,34 +29,64 @@ export default function ProductList() {
   const [productName, setProductName] = useState("Hand Wash");
   const [products, setProducts] = useState([
     {
-      shopName: "asic",
-      productName: "Evan",
+      shopName: "Converse",
+      productName: "Shoe",
       price: 15,
       uri: require("../../assets/shoes.jpeg"),
     },
     {
-      shopName: "ucok",
-      productName: "Banana",
+      shopName: "H&M",
+      productName: "Shirt",
       price: 23,
-      uri: require("../../assets/shoes.jpeg"),
+      uri: require("../../assets/tshirt.jpeg"),
     },
     {
-      shopName: "ew",
-      productName: "Xerud",
-      price: 69,
-      uri: require("../../assets/shoes.jpeg"),
+      shopName: "Zara",
+      productName: "Jacket",
+      price: 150,
+      uri: require("../../assets/jacket.jpeg"),
     },
     {
-      shopName: "eheh",
-      productName: "Xerud",
-      price: 69,
-      uri: require("../../assets/shoes.jpeg"),
+      shopName: "Phatek Philippe",
+      productName: "Watch",
+      price: 4000,
+      uri: require("../../assets/watch.jpeg"),
     },
     {
-      shopName: "kemme",
-      productName: "Xerud",
-      price: 69,
-      uri: require("../../assets/shoes.jpeg"),
+      shopName: "Apple",
+      productName: "Airpods",
+      price: 300,
+      uri: require("../../assets/airpods.jpeg"),
+    },
+    {
+      shopName: "Apple",
+      productName: "M2 14-inch",
+      price: 300,
+      uri: require("../../assets/m2.jpeg"),
+    },
+    {
+      shopName: "Apple",
+      productName: "Casing",
+      price: 10,
+      uri: require("../../assets/casing.jpeg"),
+    },
+    {
+      shopName: "Apple",
+      productName: "iPad",
+      price: 1500,
+      uri: require("../../assets/ipad.jpeg"),
+    },
+    {
+      shopName: "Logitech",
+      productName: "Mouse",
+      price: 40,
+      uri: require("../../assets/mouse.jpeg"),
+    },
+    {
+      shopName: "Samsung",
+      productName: "Monitor",
+      price: 200,
+      uri: require("../../assets/monitor.jpeg"),
     },
   ]);
 
@@ -178,18 +208,17 @@ export default function ProductList() {
           {products.map((product, index) => (
             <TouchableOpacity
               key={index}
-              className="bg-bgblack/50 justify-center h-56 w-[156px] rounded-lg sm:h-64 sm:w-[170px] md:h-[270px] md:w-[180px]"
+              className="bg-bgblack/50 h-56 w-[156px] rounded-lg sm:h-64 sm:w-[170px] md:h-[270px] md:w-[180px]"
             >
               <Image
-                className="w-[156px] sm:w-[170px] h-[180px] md:w-[180px] mx-auto rounded-t-lg"
+                className="w-[156px] h-[180px] md:h-[243px] md:w-[190px] sm:w-[180px] sm:h-56 mx-auto rounded-t-lg"
                 source={product.uri}
-              />
-
+              />  
               <View className="flex flex-row mt-1 justify-between px-3">
-                <Text className="text-white font-lato text-[18px]">
+                <Text className="text-white font-lato text-[15px]">
                   {product.productName}
                 </Text>
-                <Text className="text-white font-lato text-[18px]">
+                <Text className="text-white font-lato text-[15px]">
                   ${product.price}
                 </Text>
               </View>

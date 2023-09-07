@@ -4,6 +4,7 @@ import {
   Alert,
   Image,
   View,
+  SafeAreaView,
   ScrollView,
   FlatList,
 } from "react-native";
@@ -27,9 +28,11 @@ export default function ProductList() {
   const [search, setSearch] = useState("");
   const [productName, setProductName] = useState("Hand Wash");
   const [products, setProducts] = useState([
-    { shopName: "asic", productName: "evan", price: 15 },
-    { shopName: "ucok", productName: "banana", price: 23 },
-    { shopName: "ew", productName: "xerud", price: 69 }
+    { shopName: "asic", productName: "Evan", price: 15, uri: require("../../assets/shoes.jpeg")},
+    { shopName: "ucok", productName: "Banana", price: 23, uri: require("../../assets/shoes.jpeg")},
+    { shopName: "ew", productName: "Xerud", price: 69, uri: require("../../assets/shoes.jpeg")},
+    { shopName: "eheh", productName: "Xerud", price: 69, uri: require("../../assets/shoes.jpeg")},
+    {shopName: "kemme", productName: "Xerud", price: 69, uri: require("../../assets/shoes.jpeg")}
   ]);
 
   const handleSubmit = async () => {
@@ -74,7 +77,7 @@ export default function ProductList() {
   };
 
   const handleCart = async () => {
-    router.push("Checkout/indivcart");
+    router.push("checkout/indivcart");
   };
 
   const handleSearch = () => {
@@ -83,44 +86,41 @@ export default function ProductList() {
     );
   };
 
+  
+
   return (
-    <ScrollView className="align-middle flex-1 bg-black/80">
-      <View className="h-16 bg-bgred">
-        <View className="flex flex-row mt-1 justify-between mx-4">
-          <TouchableOpacity className="mt-6" onPress={handleCart}>
-            <ShoppingCart color="white" size={22} />
-          </TouchableOpacity>
-          <Image
-            className="w-24 h-7 mt-5"
+    <SafeAreaView className="flex flex-1 bg-black/80">
+      <View className="h-16">
+        <View className="flex flex-row justify-end mx-4">
+        <Image
+            className="w-24 h-7 mt-5 mr-auto"
             source={require("../../assets/whitetiktok.png")}
           />
-          <TouchableOpacity
-            className="mt-6"
-            onPress={async () => {
-              await supabase.auth.signOut();
-            }}
-          >
-            <LogOut color="white" size={22} />
-          </TouchableOpacity>
+          <View className="flex flex-row">
+          
+            <TouchableOpacity className="mt-6 mr-4" onPress={handleCart}>
+                <ShoppingCart color="white" size={22} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              className="mt-6"
+              onPress={async () => {
+                await supabase.auth.signOut();
+              }}
+            >
+              <LogOut color="white" size={22} />
+            </TouchableOpacity>
+
+          </View>
+          
         </View>
       </View>
 
       <View className="m-4">
         <TextInput className="h-12"></TextInput>
-        <View className="flex-row justify-center rounded-b-lg bg-bgblue space-x-12 py-2">
+        <View className="flex-row justify-center rounded-b-lg bg-bgred space-x-20 py-2">
           <View className="">
             <TouchableOpacity
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                marginRight: 10,
-                marginTop: 10,
-                borderColor: "#69C9D0",
-                borderWidth: 2,
-                paddingHorizontal: 5,
-                paddingVertical: 2,
-                width: 95,
-              }}
+              className="items-center my-2"
               onPress={() =>
                 router.push({
                   pathname: "list",
@@ -138,18 +138,7 @@ export default function ProductList() {
 
           <View>
             <TouchableOpacity
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                marginRight: 10,
-                marginTop: 10,
-                borderColor: "#69C9D0",
-                borderWidth: 2,
-                paddingHorizontal: 5,
-                paddingVertical: 2,
-                width: 95,
-              }}
-              className="text-white"
+              className="items-center my-2"
               onPress={handleCart}
             >
               <ShoppingBasket color="white" size={24} />
@@ -161,29 +150,33 @@ export default function ProductList() {
           </View>
         </View>
       </View>
-
-      <View className="grid grid-cols-2 gap-4 m-0">
+      <ScrollView className="m-4">
+      <View style={{flex: 1, flexDirection:"row", flexWrap:"wrap", gap: 30}} className="space-x-0 justify-between">
         {products.map((product, index) => (
-            <View key={index} className="bg-bgblue h-44 w-40 rounded-lg">
-                <Image
-                    className="w-[62px] h-[97px] mx-auto"
-                    source={require("../../assets/ucok.png")}
-                />
-                <View className="flex flex-row mt-1 justify-between">
-                    <Text className="text-white font-lato">
-                    {product.productName}
-                    </Text>
-                    <Text className="text-white font-lato">{product.price}</Text>
-                </View>
-                <View className="flex flex-row mt-1 justify-between">
-                    <Text className="text-white text-md font-lato">
-                    {product.shopName}
-                    </Text>
-                </View>  
-            </View>
+            <TouchableOpacity key={index} className="bg-bgblack/50 justify-center h-56 w-[156px] rounded-lg sm:h-64 sm:w-[170px] md:h-[270px] md:w-[180px]">
+              <Image
+                      className="w-[156px] sm:w-[170px] h-[180px] md:w-[180px] mx-auto rounded-t-lg"
+                      source={product.uri}
+                  />
+                
+                  <View className="flex flex-row mt-1 justify-between px-3">
+                      <Text className="text-white font-lato text-[18px]">
+                      {product.productName}
+                      </Text>
+                      <Text className="text-white font-lato text-[18px]">${product.price}</Text>
+                  </View>
+                  <View className="flex flex-row mt-1 justify-between">
+                      <Text className="text-slate-300 text-md font-regencie px-3 pb-1">
+                      {product.shopName}
+                      </Text>
+                  </View>
+            
+            </TouchableOpacity>
       ))}
       </View>
+      </ScrollView>
 
-    </ScrollView>
+    </SafeAreaView>
   );
 }
+

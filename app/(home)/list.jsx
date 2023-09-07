@@ -7,12 +7,21 @@ import {
   StatusBar,
   View,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { supabase } from "../../lib/supabase";
 import { useEffect, useState } from "react";
 import { Checkbox, Text, Button } from "react-native-paper";
 import { useRouter, useSearchParams } from "expo-router";
 import * as Contacts from "expo-contacts";
+import {
+  LogOut,
+  ShoppingCart,
+  Users,
+  ShoppingBasket,
+  ArrowLeft,
+} from "lucide-react-native";
+import { useNavigation } from "expo-router";
 
 export default function HomeScreen() {
   const [contacts, setContacts] = useState([]);
@@ -20,6 +29,7 @@ export default function HomeScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const { productName } = useSearchParams();
   const router = useRouter();
+  const navigation = useNavigation();
 
   useEffect(() => {
     async function fetchBuyers() {
@@ -84,16 +94,48 @@ export default function HomeScreen() {
     </View>
   );
 
+  const handleCart = async () => {
+    router.push("checkout/indivcart");
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }} className="bg-black/80">
+      <View className="h-16">
+        <View className="flex flex-row justify-between mx-4">
+          <View className="flex flex-row">
+            <TouchableOpacity className="mt-6 mr-16" onPress={() =>
+                navigation.navigate('index')
+              }>
+              <ArrowLeft color="white" size={24}/>
+            </TouchableOpacity>
+          </View>
+          
+          <View className="flex flex-row">
+            <TouchableOpacity className="mt-6 mr-4" onPress={handleCart}>
+                <ShoppingCart color="white" size={22} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              className="mt-6"
+              onPress={async () => {
+                await supabase.auth.signOut();
+              }}
+            >
+              <LogOut color="white" size={22} />
+            </TouchableOpacity>
+
+          </View>
+          
+        </View>
+      </View>
       <Text
-        style={{ marginHorizontal: 20, marginTop: 20, marginBottom: 10 }}
-        className="text-white"
+  
+        className="text-white text-lg font-lato mx-4 my-4"
       >
-        Assuming all contacts below are TikTok users, are on current device's
-        contact list and are purchasing the {productName}.
+        {productName}
       </Text>
+      <Text className=" text-white mx-4 font-lato">Contacts</Text>
       <FlatList
+        className="m-4 rounded-xl"
         data={contacts}
         renderItem={({ item }) => <Item title={item} />}
         keyExtractor={(item) => item.id}
@@ -112,6 +154,7 @@ const styles = StyleSheet.create({
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
+    
   },
   title: {
     fontSize: 16,

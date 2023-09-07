@@ -5,8 +5,6 @@ export default function HomeScreen() {
     <Stack
       screenOptions={{
         headerShown: false,
-        headerTintColor: "white",
-        headerStyle: { backgroundColor: "#EE1D52" },
       }}
     >
       <Stack.Screen name="index" options={{ title: "Main Page" }} />

@@ -16,7 +16,7 @@ export default function ProductList() {
   const router = useRouter();
 
   const { user } = useAuth();
-  const [productName, setProductName] = useState("Hand Wash");
+  const [productName2, setProductName] = useState("Hand Wash");
 
   const handleSubmit = async () => {
     const { data: existingProducts, error } = await supabase
@@ -60,10 +60,10 @@ export default function ProductList() {
   };
 
   const handleCart = async () => {
-    router.push("Checkout/indivcart");
+    router.push("checkout/indivcart");
   };
 
-  console.log(product);
+  console.log(productName);
 
   return (
     <SafeAreaView className="justify-center align-middle flex-1 bg-black/80">
@@ -81,13 +81,7 @@ export default function ProductList() {
             {productName}
           </Text>
         </View>
-
-        <View>
-          <Image
-            style={{ width: "100%", height: 20, marginVertical: 20 }}
-            source={require("../../assets/banner.jpeg")}
-          />
-        </View>
+          
       </View>
       <View className="flex-row justify-center ml-7">
         <View>

@@ -81,7 +81,7 @@ export default function LoginPage() {
             className="border-white w-full bg-bgred py-3 rounded-lg"
           >
             {loading ? (
-              <ActivityIndicator className="mx-auto" />
+              <ActivityIndicator className="mx-auto h-4 w-4" />
             ) : (
               <Text className="text-white font-lato mx-auto">Submit</Text>
             )}

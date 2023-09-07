@@ -6,8 +6,12 @@ export const unstable_settings = {
 
 export default function AuthRoot() {
   return (
-    <Stack screenOptions={{ headerShown: false, headerStyle:{backgroundColor: "#EE1D52"}, headerTintColor: "white"}}>
-        
-    </Stack>
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        headerStyle: { backgroundColor: "#EE1D52" },
+        headerTintColor: "white",
+      }}
+    ></Stack>
   );
 }

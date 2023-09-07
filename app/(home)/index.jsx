@@ -1,18 +1,21 @@
-import { SafeAreaView, TouchableOpacity, Text, Alert, Image, View, ScrollView } from 'react-native';
+import { TouchableOpacity, Text, Alert, Image, View, ScrollView, FlatList } from 'react-native';
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
-import { Button, TextInput } from 'react-native-paper';
+import { TextInput } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import { useAuth } from '../../contexts/auth'
 import { useNavigation } from '@react-navigation/native';
 import { LogOut, ShoppingCart, Users, ShoppingBasket} from 'lucide-react-native';
+import CustomHeader from '../../components/CustomHeader';
 
 
 export default function ProductList() {
     const router = useRouter();
     const navigation = useNavigation();
     const { user } = useAuth();
+    const [search, setSearch] = useState('');
     const [productName, setProductName] = useState("Hand Wash");
+    const [products, setProducts] = useState([{productName: "evan", price: 15}, {shopName: "ucok", productName: "banana", price: 23}])
 
     const handleSubmit = async () => {
         const { data: existingProducts, error } = await supabase
@@ -63,6 +66,11 @@ export default function ProductList() {
         router.push("Checkout/indivcart");
     }
 
+    const handleSearch = () => {
+        products.filter((product) => product.productName.includes(search.toLowerCase()))
+    }
+    
+
 
     return (
         <ScrollView className="align-middle flex-1 bg-black/80">
@@ -84,7 +92,7 @@ export default function ProductList() {
                             <LogOut color="white" size={22}/>
                         </TouchableOpacity>
                 </View>
-            </View>
+        </View>
 
            
             
@@ -142,11 +150,34 @@ export default function ProductList() {
                 
                
             </View>
+
+                {products.map((product, index) => (
+                    <View className=" flex-wrap grid-rows-3 justify-between m-4">
+                        <TouchableOpacity>
+                            <View className="bg-bgblue flex-1 align-middle h-60 w-40 m-2">
+                                <Image className="w-[124px] h-[194px] mx-auto" source={require('../../assets/ucok.png')} />
+
+                                
+                                <View className="flex flex-row mt-1 justify-between">
+                                    <Text className="text-white font-lato">{product.productName}</Text>
+                                    <Text className="text-white font-lato">{product.price}</Text>
+                                </View>
+
+                                <View className="flex flex-row mt-1 justify-between">
+                                    <Text className="text-white text-md font-lato">{product.shopName}</Text>
+                                    <Text className="text-white font-lato"> Udin</Text>
+                                </View>
+
+                            </View>
+                        </TouchableOpacity>
+                        
+                    </View>
+                ))}
            
             <View className="flex-row grid-rows-3 justify-between m-4">
                 <TouchableOpacity>
                     <View className="bg-bgblue flex-1 align-middle h-60 w-40">
-                        <Image className="w-[200px] h-[194px] mx-auto" source={require('../../assets/ucok.png')} />
+                        <Image className="w-[124px] h-[194px] mx-auto" source={require('../../assets/ucok.png')} />
 
                         
                         <View className="flex flex-row mt-1 justify-between">
@@ -168,7 +199,7 @@ export default function ProductList() {
                 </TouchableOpacity>
                 <TouchableOpacity>
                     <View className="bg-bgblue flex-1 align-middle h-60 w-40">
-                        <Image className="w-[200px] h-[194px] mx-auto" source={require('../../assets/ucok.png')} />
+                        <Image className="w-[124px] h-[194px] mx-auto" source={require('../../assets/ucok.png')} />
 
                         
                         <View className="flex flex-row mt-1 justify-between">
@@ -178,7 +209,7 @@ export default function ProductList() {
 
                         <View className="flex flex-row mt-1 justify-between">
                             <Text className="text-white font-lato">Owner Name</Text>
-                            <Text className="text-white font-lato"> Udin</Text>
+                            <Text className="text-white font-lato"> {productName}</Text>
                         </View>
                         
                         
@@ -189,25 +220,13 @@ export default function ProductList() {
                     
                 </TouchableOpacity>
             </View>
-            <View>
-                <TouchableOpacity
-                style={{
-                    alignSelf: "flex-end",
-                    marginRight: 20,
-                    marginTop: 10,
-                    borderColor: 'white',
-                    borderWidth: 2,
-                    paddingHorizontal: 5,
-                    paddingVertical: 2,
-                    width: 95,
-                    justifyContent: "center",
-                    alignItems: "center"
-                }}
-                onPress={handleSubmit}
-            >
-                    <Text className="text-white font-calibri"> Add to Cart </Text>
-                </TouchableOpacity>
-            </View>
+
+            
+            
+            
+
+
+            
 
             
            

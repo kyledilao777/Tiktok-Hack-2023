@@ -179,7 +179,7 @@ export default function IndivCheckout() {
                     </Text>
                   </View>
                   <View style={styles.payment}>
-                    <Text className="text-white font-lato ml-8 mt-3">
+                    <Text className="text-white font-lato ml-3 mt-3">
                       ${product.quantity * product.price}
                     </Text>
                   </View>

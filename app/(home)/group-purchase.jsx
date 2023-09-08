@@ -2,14 +2,16 @@ import { useState, useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
 import { supabase } from "../../lib/supabase";
 import { View, FlatList, ScrollView, TouchableOpacity } from "react-native";
-import { Link, useSearchParams } from "expo-router";
+import { Link, useSearchParams, useRouter} from "expo-router";
 import { Text, Button, Modal } from "react-native-paper";
+import { useAuth } from "../../contexts/auth";
 
 export default function GroupBuyPage() {
   const minimumOrder = 50;
   const newUserDiscount = 0.9;
   const groupOrderDiscount = 0.95;
   const router = useRoute();
+  const route = useRouter();
   const { productName, price } = router.params;
   const [quantity, setQuantity] = useState(1);
   const [currentProductPrice, setOutputValue] = useState(price);
@@ -24,6 +26,7 @@ export default function GroupBuyPage() {
   const [accounts, setUsers] = useState([]);
   const [discounts, setDiscounts] = useState([]);
   const [isModalVisible, setModalVisible] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -129,6 +132,17 @@ export default function GroupBuyPage() {
     </View>
   );
 
+  const handleSubmit = async () => {
+    const { error } = await supabase.from('products').insert({
+        name: productName,
+        buyer: user.user_metadata.phone_number,
+        quantity: quantity,
+        price: price,
+        group: true,
+    })
+    route.push('view-cart');
+  }
+
   return (
     <View className="bg-bgblack/80 flex-1 ">
       <View className="m-8">
@@ -176,11 +190,7 @@ export default function GroupBuyPage() {
           <View style={{ marginBottom: 10 }}>
             {currentGroup.map((item, index) => (
               <View key={index}>
-                <View className="flex flex-row justify-between mt-4">
-                  <View>
-                    <Text></Text>
-                  </View>
-
+                <View className="flex flex-row justify-between my-4 border-b-2 border-white ">
                   <Text className="text-white text-lg">{item.first_name}</Text>
                   <Text className="text-white text-lg">{item.details}</Text>
                   <Text className="text-white text-lg">
@@ -214,9 +224,7 @@ export default function GroupBuyPage() {
             <Button
               className="text-white bg-bgred mt-4 rounded-lg"
               mode="contained"
-              onPress={() => {
-                alert("Minimum order value not met");
-              }}
+              onPress={handleSubmit}
             >
               Confirm Order
             </Button>

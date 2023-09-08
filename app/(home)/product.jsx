@@ -6,21 +6,18 @@ import {
   Image,
   View,
 } from "react-native";
-import { ArrowLeft, ShoppingCart, LogOut } from "lucide-react-native";
-import { useState } from "react";
+import { Users, ShoppingBasket, PlusCircle } from "lucide-react-native";
 import { supabase } from "../../lib/supabase";
-import { useRouter } from "expo-router";
 import { useNavigation } from "expo-router";
 import { useAuth } from "../../contexts/auth";
 import { useRoute } from "@react-navigation/native";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ProductList() {
   const router = useRoute();
   const navigation = useNavigation();
-  const { productName, uri } = router.params;
+  const { productName, uri, price } = router.params;
   const { user } = useAuth();
-  const [productName2, setProductName] = useState("Hand Wash");
 
   const handleSubmit = async () => {
     const { data: existingProducts, error } = await supabase
@@ -51,7 +48,7 @@ export default function ProductList() {
         name: productName,
         buyer: user.user_metadata.phone_number,
         quantity: 1,
-        price: 8,
+        price: price,
         group: false,
       });
 
@@ -63,96 +60,44 @@ export default function ProductList() {
     Alert.alert("Added to Cart!", "", [{ text: "Ok" }]);
   };
 
-  const goBackToMainPage = () => {
-    navigation.navigate("index");
-  }
-
-  const viewCart = () => {
-    navigation.navigate("view-cart");
-  }
-
   return (
     <SafeAreaView className="flex-1 bg-black/80">
-      <View className="mt-8">
-        <View>
-          <Image className="w-[200px] h-[400px] mx-auto" source={uri} />
-        </View>
-        <View>
-          <Text className="text-xl  text-white font-calibri">
+      <View className="mt-4">
+        <Image className="h-[500px] w-full mx-auto" source={uri} />
+
+        <View className="flex flex-row justify-between bg-bgred py-4">
+          <Text className="text-2xl  text-white font-lato pl-4">
             {productName}
           </Text>
+          <Text className="text-2xl  text-white font-lato pr-4">${price}</Text>
         </View>
       </View>
 
-      <View className="flex-row justify-center ml-7">
-        <View>
-          <TouchableOpacity
-            style={{
-              alignSelf: "flex-end",
-              marginRight: 20,
-              marginTop: 10,
-              borderColor: "white",
-              borderWidth: 2,
-              paddingHorizontal: 5,
-              paddingVertical: 2,
-              width: 95,
-            }}
-            onPress={() =>
-              router.push({
-                pathname: "list",
-                params: { productName: productName },
-              })
-            }
-          >
-            <Text className="text-white font-calibri align-middle justify-center pl-1">
-              {" "}
-              Find friends{" "}
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        <View>
-          <TouchableOpacity
-            style={{
-              alignSelf: "flex-end",
-              marginRight: 20,
-              marginTop: 10,
-              borderColor: "white",
-              borderWidth: 2,
-              paddingHorizontal: 5,
-              paddingVertical: 2,
-              width: 95,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            onPress={handleSubmit}
-          >
-            <Text className="text-white font-calibri"> Add to Cart </Text>
-          </TouchableOpacity>
-        </View>
-
-        
-      </View>
-      <View>
+      <View className="flex-row justify-center h-full rounded-b-lg bg-bgblack space-x-12 py-20">
+        <TouchableOpacity className="items-center my-2" onPress={handleSubmit}>
+          <PlusCircle color="#69C9D0" size={24} />
+          <Text className="text-white font-calibri align-middle justify-center pl-1 mt-2">
+            Add to Cart
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity
-          style={{
-            alignSelf: "flex-end",
-            marginRight: 20,
-            marginTop: 10,
-            borderColor: "white",
-            borderWidth: 2,
-            paddingHorizontal: 5,
-            paddingVertical: 2,
-            width: 95,
-            justifyContent: "center",
-            alignItems: "center",
-            marginRight: 251,
-          }}
-          onPress={async () => {
-            await supabase.auth.signOut();
-          }}
+          className="items-center my-2"
+          onPress={() => navigation.navigate("friend-list")}
         >
-          <Text className="text-white font-calibri">Log Out</Text>
+          <Users color="white" size={24} />
+          <Text className="text-white font-calibri align-middle justify-center pl-1 mt-2">
+            Find Friends
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          className="items-center my-2"
+          onPress={() => navigation.navigate("group-purchase")}
+        >
+          <ShoppingBasket color="white" size={24} />
+          <View className="flex-row mt-2">
+            <Text className="text-white font-calibri"> Group Purchase</Text>
+          </View>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

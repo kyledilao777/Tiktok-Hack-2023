@@ -12,11 +12,7 @@ import { supabase } from "../../lib/supabase";
 import { TextInput } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useAuth } from "../../contexts/auth";
-import {
-  LogOut,
-  ShoppingCart,
-  Search,
-} from "lucide-react-native";
+import { LogOut, ShoppingCart, Search } from "lucide-react-native";
 
 export default function ProductList() {
   const router = useRouter();
@@ -86,8 +82,8 @@ export default function ProductList() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(null);
 
-  const handleNavigation = (productName, uri) => {
-    router.push({ pathname:"product", params:{ productName, uri }});
+  const handleNavigation = (productName, uri, price) => {
+    router.push({ pathname: "product", params: { productName, uri, price } });
   };
 
   const displayedProducts = filteredProducts || products;
@@ -98,7 +94,7 @@ export default function ProductList() {
 
   return (
     <SafeAreaView className="flex flex-1 bg-black/80">
-      <View className="flex flex-row items-center bg-slate-50 mx-4 my-2 rounded-lg h-10 mt-8">
+      <View className="flex flex-row items-center bg-slate-50 mx-4 my-2 rounded-lg h-10 mt-4">
         <Search className="ml-4 text-gray-500" size={20} />
         <TextInput
           placeholderTextColor="gray"
@@ -120,17 +116,24 @@ export default function ProductList() {
             <TouchableOpacity
               key={index}
               className="bg-bgred h-56 w-[156px] rounded-lg md:h-64 md:w-[160px] xl:h-[270px] xl:w-[180px] lg:w-[165px]"
-              onPress={() => handleNavigation(product.productName, product.uri)}
+              onPress={() =>
+                handleNavigation(
+                  product.productName,
+                  product.uri,
+                  product.price
+                )
+              }
             >
               <Image
                 className="w-[156px] h-[180px] xl:h-[243px] xl:w-[190px] md:w-[160px] lg:w-[165px] lg:h-56 md:h-52 mx-auto rounded-t-lg"
                 source={product.uri}
+                l
               />
-              <View className="flex flex-row mt-1 justify-between px-3 lg:mt-3">
+              <View className="flex flex-row mt-1 justify-between px-3 lg:mt-2">
                 <Text className="text-white font-lato text-[16px]">
                   {product.productName}
                 </Text>
-                <Text className="text-white font-lato text-[16px]"> 
+                <Text className="text-white font-lato text-[16px]">
                   ${product.price}
                 </Text>
               </View>

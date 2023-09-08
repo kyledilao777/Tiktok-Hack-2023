@@ -170,13 +170,13 @@ export default function ProductList() {
         </View>
       </View>
 
-      <View className="flex flex-row items-center bg-slate-50 mx-4 rounded-lg h-10">
+      <View className="flex flex-row items-center bg-slate-50 mx-4 my-2 rounded-lg h-10">
         <Search className="ml-4 text-gray-500" size={20} />
         <TextInput
           placeholderTextColor="gray"
           activeUnderlineColor={"transparent"}
           selectionColor="#69C9D0"
-          className="h-10 my-2 rounded-lg bg-slate-50"
+          className="h-10 rounded-lg bg-slate-50"
           placeholder="Search for products..."
           defaultValue={searchTerm}
           onChangeText={(newTerm) => setSearchTerm(newTerm)}

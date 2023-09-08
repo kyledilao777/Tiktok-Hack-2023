@@ -1,7 +1,6 @@
 import { View, Image, TouchableOpacity } from "react-native";
 import { useState } from "react";
-import { Text, TextInput, Button, ActivityIndicator } from "react-native-paper";
-import { Link } from "expo-router";
+import { Text, TextInput, ActivityIndicator } from "react-native-paper";
 import { supabase } from "../../lib/supabase";
 import { useRouter } from "expo-router";
 
@@ -59,6 +58,8 @@ export default function LoginPage() {
           <Text className=" text-white font-lato text-[16px] mb-1">Email</Text>
           <TextInput
             className="mb-4 bg-slate-50"
+            selectionColor="#69C9D0"
+            activeUnderlineColor={"transparent"}
             autoCapitalize="none"
             textContentType="emailAddress"
             value={email}
@@ -69,7 +70,8 @@ export default function LoginPage() {
           </Text>
           <TextInput
             className="mb-4 bg-slate-50"
-            secureTextEntry
+            selectionColor="#69C9D0"
+            activeUnderlineColor={"transparent"}
             autoCapitalize="none"
             textContentType="password"
             value={password}

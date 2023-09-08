@@ -6,9 +6,8 @@ import {
   View,
   SafeAreaView,
   ScrollView,
-  FlatList,
 } from "react-native";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { TextInput } from "react-native-paper";
 import { useRouter } from "expo-router";
@@ -19,15 +18,15 @@ import {
   ShoppingCart,
   Users,
   ShoppingBasket,
+  Search,
 } from "lucide-react-native";
 
 export default function ProductList() {
   const router = useRouter();
   const navigation = useNavigation();
   const { user } = useAuth();
-  const [search, setSearch] = useState("");
-  const [productName, setProductName] = useState("Hand Wash");
-  const [products, setProducts] = useState([
+  const [productName, setProductName] = useState("Hand Wash"); // ??
+  const products = [
     {
       shopName: "Converse",
       productName: "Shoe",
@@ -88,7 +87,9 @@ export default function ProductList() {
       price: 200,
       uri: require("../../assets/monitor.jpeg"),
     },
-  ]);
+  ];
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState(null);
 
   const handleSubmit = async () => {
     const { data: existingProducts, error } = await supabase
@@ -135,15 +136,15 @@ export default function ProductList() {
     router.push("checkout/indivcart");
   };
 
-  const handleSearch = () => {
-    products.filter((product) =>
-      product.productName.includes(search.toLowerCase())
-    );
-  };
-
   const handleNavigation = (productName, uri) => {
     navigation.navigate("product", { productName, uri });
   };
+
+  const displayedProducts = filteredProducts || products;
+
+  const filteredDisplayProducts = displayedProducts.filter((product) =>
+    product.productName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <SafeAreaView className="flex flex-1 bg-black/80">
@@ -169,49 +170,28 @@ export default function ProductList() {
         </View>
       </View>
 
-      <View className="m-4">
-        <TextInput className="h-12 bg-slate-50 rounded-t-lg"></TextInput>
-        <View className="flex-row justify-center rounded-b-lg bg-bgred space-x-24 py-2">
-          <View className="">
-            <TouchableOpacity
-              className="items-center my-2"
-              onPress={() =>
-                router.push({
-                  pathname: "list",
-                  params: { productName: productName },
-                })
-              }
-            >
-              <Users color="white" size={24} />
-              <Text className="text-white font-calibri align-middle justify-center pl-1 mt-2">
-                Find Friends
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          <View>
-            <TouchableOpacity
-              className="items-center my-2"
-              onPress={handleCart}
-            >
-              <ShoppingBasket color="white" size={24} />
-              <View className="flex-row mt-2">
-                <Text className="text-white font-calibri"> Group </Text>
-                <Text className="text-white font-calibri">Purchase</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
+      <View className="flex flex-row items-center bg-slate-50 mx-4 rounded-lg h-10">
+        <Search className="ml-4 text-gray-500" size={20} />
+        <TextInput
+          placeholderTextColor="gray"
+          activeUnderlineColor={"transparent"}
+          selectionColor="#69C9D0"
+          className="h-10 my-2 rounded-lg bg-slate-50"
+          placeholder="Search for products..."
+          defaultValue={searchTerm}
+          onChangeText={(newTerm) => setSearchTerm(newTerm)}
+        />
       </View>
+
       <ScrollView className="m-4">
         <View
           style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", gap: 30 }}
           className="space-x-0 justify-between"
         >
-          {products.map((product, index) => (
+          {filteredDisplayProducts.map((product, index) => (
             <TouchableOpacity
               key={index}
-              className="bg-bgblack h-56 w-[156px] rounded-lg sm:h-64 sm:w-[170px] md:h-[270px] md:w-[180px]"
+              className="bg-bgred h-56 w-[156px] rounded-lg sm:h-64 sm:w-[170px] md:h-[270px] md:w-[180px]"
               onPress={() => handleNavigation(product.productName, product.uri)}
             >
               <Image
@@ -223,11 +203,12 @@ export default function ProductList() {
                   {product.productName}
                 </Text>
                 <Text className="text-white font-lato text-[16px]">
-                  ${product.price}
+                  <Text className="text-bgblue">$</Text>
+                  {product.price}
                 </Text>
               </View>
               <View className="flex flex-row justify-between mt-0.5">
-                <Text className="text-slate-300 text-[12px] font-regencie pl-3">
+                <Text className="text-slate-100 text-[12px] font-regencie pl-3">
                   {product.shopName}
                 </Text>
               </View>

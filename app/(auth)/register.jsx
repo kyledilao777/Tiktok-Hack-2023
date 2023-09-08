@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { View, TouchableOpacity, Image } from "react-native";
-import { Text, TextInput, ActivityIndicator, Button } from "react-native-paper";
+import { Text, TextInput, ActivityIndicator } from "react-native-paper";
 import { useRouter } from "expo-router";
 
 export default function Register() {
@@ -83,6 +83,8 @@ export default function Register() {
               <Text className="text-white font-lato mb-1">First Name</Text>
               <TextInput
                 className="mb-4 flex-1 bg-slate-50"
+                selectionColor="#69C9D0"
+                activeUnderlineColor={"transparent"}
                 autoCapitalize="none"
                 textContentType="givenName"
                 value={firstName}
@@ -93,6 +95,8 @@ export default function Register() {
               <Text className="text-white font-lato mb-1">Last Name</Text>
               <TextInput
                 className="mb-4 bg-slate-50"
+                selectionColor="#69C9D0"
+                activeUnderlineColor={"transparent"}
                 autoCapitalize="none"
                 textContentType="familyName"
                 value={lastName}
@@ -105,6 +109,8 @@ export default function Register() {
             <Text className="text-white font-lato mb-1">Email</Text>
             <TextInput
               className="mb-4 bg-slate-50"
+              selectionColor="#69C9D0"
+              activeUnderlineColor={"transparent"}
               autoCapitalize="none"
               textContentType="emailAddress"
               value={email}
@@ -113,6 +119,8 @@ export default function Register() {
             <Text className="text-white font-lato mb-1">Password</Text>
             <TextInput
               className="mb-4 bg-slate-50"
+              selectionColor="#69C9D0"
+              activeUnderlineColor={"transparent"}
               secureTextEntry
               autoCapitalize="none"
               textContentType="password"
@@ -122,6 +130,8 @@ export default function Register() {
             <Text className="text-white font-lato mb-1">Phone Number</Text>
             <TextInput
               className="mb-4 bg-slate-50"
+              selectionColor="#69C9D0"
+              activeUnderlineColor={"transparent"}
               rautoCapitalize="none"
               textContentType="telephoneNumber"
               value={phoneNumber}

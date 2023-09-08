@@ -6,9 +6,6 @@ export default function HomeScreen() {
       screenOptions={{
         headerShown: false,
       }}
-    >
-      <Stack.Screen name="index" options={{ title: "Main Page" }} />
-      <Stack.Screen name="list" options={{ title: "Friend List" }} />
-    </Stack>
+    ></Stack>
   );
 }

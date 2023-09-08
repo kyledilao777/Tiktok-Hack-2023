@@ -6,9 +6,8 @@ import {
   Image,
   View,
 } from "react-native";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { supabase } from "../../lib/supabase";
-import { Button, TextInput } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useAuth } from "../../contexts/auth";
 import { useRoute } from "@react-navigation/native";
@@ -80,6 +79,7 @@ export default function ProductList() {
           </Text>
         </View>
       </View>
+
       <View className="flex-row justify-center ml-7">
         <View>
           <TouchableOpacity

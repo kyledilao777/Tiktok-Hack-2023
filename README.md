@@ -33,9 +33,9 @@ Our primary goal is to encourage users to participate in group purchases, thus e
 - Existing TikTok Users: Users are empowered to invite their existing TikTok contacts and friends to participate in the group purchase order. This feature leverages users' existing social networks, making it easier for them to collaborate and shop together with people they already know.
 - New Users: The feature goes a step further by allowing users to invite new users who may not yet be on the TikTok platform. To achieve this, an invite link is generated, which serves as an open invitation to join the group purchase. Users can forward this link to friends and acquaintances who are not yet TikTok users, effectively expanding the user base.
 
-## Running the App
+## Running the Prototype
 
-To run the app, follow these instructions:
+To run the Prototype, follow these instructions:
 
 1. **Clone the GitHub Repository:**
    Clone the GitHub repository into your laptop's terminal/command prompt using the following link: [https://github.com/kyledilao777/Tiktok-Hack](https://github.com/kyledilao777/Tiktok-Hack)
@@ -44,12 +44,12 @@ To run the app, follow these instructions:
    Download all the dependencies using `npm install`.
 
 3. **Request Supabase API Key and URL:**
-   Please send a request for the private Supabase API key and URL. These credentials are required for the app to function properly.
+   Please send a request to kyledaniel.lao@gmail.com for the private Supabase API key and URL. These credentials are required for the app to function properly.
 
 4. **Create a `.env` File:**
    Add a new `.env` file to the project root directory to contain the Supabase URL and API key.
 
-5. **Start the App:**
+5. **Start the Prototype:**
    Type the following command into your terminal:
 
    ```shell
@@ -58,3 +58,20 @@ To run the app, follow these instructions:
 6. **Run on IOS Simulator**
     - After starting the app, you can run it on an iOS simulator by pressing the i key.
     - Make sure you have Expo Go installed on your laptop to run the app on the simulator.
+  
+## Deep-dive into the Prototype
+1. Finding a buddy to buy the latest Converse kicks with? Fret not! Our newest feature, "Find Friends" helps Tiktok users find other users, saved on their phone as a contact, who have also added the item to their cart. This way, like-minded Converse fans can purchase the new sneakers together and grab all those juicy discounts along the way!
+
+From your Contacts Page:  
+<img width="150" alt="Simulator Screenshot - iPhone 14 Pro - 2023-09-08 at 23 22 08" src=https://github.com/kyledilao777/Tiktok-Hack/assets/108947940/9040b68e-cb3b-4767-8a79-1d417ff3ff8d>
+
+To our Prototype:  
+<img width="150" alt="Simulator Screenshot - iPhone 14 Pro - 2023-09-08 at 23 20 55" src=https://github.com/kyledilao777/Tiktok-Hack/assets/108947940/c4bd4f83-11dc-431e-8eed-c3fa929b9f73>
+
+Don't forget to drop them a message and create a group purchase for your latest buys, clinching those valuable bulk discount vouchers! 
+
+2. Group Purchase Buy
+
+
+
+

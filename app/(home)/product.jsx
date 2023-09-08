@@ -10,15 +10,15 @@ import { ArrowLeft, ShoppingCart, LogOut } from "lucide-react-native";
 import { useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { useRouter } from "expo-router";
-import { useNavigation } from "expo-router";
+import { useSearchParams } from "expo-router";
 import { useAuth } from "../../contexts/auth";
 import { useRoute } from "@react-navigation/native";
 
 
 export default function ProductList() {
-  const router = useRoute();
-  const navigation = useNavigation();
-  const { productName, uri } = router.params;
+  const router = useRouter();
+  //const navigation = useNavigation();
+  const { productName, uri } = useSearchParams();
   const { user } = useAuth();
   const [productName2, setProductName] = useState("Hand Wash");
 
@@ -73,40 +73,12 @@ export default function ProductList() {
 
   return (
     <SafeAreaView className="flex-1 bg-black/80">
-      <View className="h-16">
-        <View className="flex flex-row justify-between mx-4">
-          <View className="flex flex-row">
-            <TouchableOpacity
-              className="mt-6 mr-16"
-              onPress={() => goBackToMainPage()}
-            >
-              <ArrowLeft color="white" size={24} />
-            </TouchableOpacity>
-          </View>
-
-          <View className="flex flex-row">
-            <TouchableOpacity className="mt-6 mr-4" onPress={viewCart}>
-              <ShoppingCart color="white" size={22} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="mt-6"
-              onPress={async () => {
-                await supabase.auth.signOut();
-              }}
-            >
-              <LogOut color="white" size={22} />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-      <View className="">
-        <View className="">
+      <View className="mt-8">
+        <View>
           <Image className="w-[200px] h-[400px] mx-auto" source={uri} />
         </View>
-
         <View>
           <Text className="text-xl  text-white font-calibri">
-            {" "}
             {productName}
           </Text>
         </View>
@@ -156,6 +128,26 @@ export default function ProductList() {
             onPress={handleSubmit}
           >
             <Text className="text-white font-calibri"> Add to Cart </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View>
+          <TouchableOpacity
+            style={{
+              alignSelf: "flex-end",
+              marginRight: 20,
+              marginTop: 10,
+              borderColor: "white",
+              borderWidth: 2,
+              paddingHorizontal: 5,
+              paddingVertical: 2,
+              width: 95,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onPress={() => navigation.navigate("groupbuy")}
+          >
+            <Text className="text-white font-calibri"> Group Buy </Text>
           </TouchableOpacity>
         </View>
 

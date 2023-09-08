@@ -21,9 +21,10 @@ import {
   Search,
 } from "lucide-react-native";
 
+
 export default function ProductList() {
   const router = useRouter();
-  const navigation = useNavigation();
+  //const navigation = useNavigation();
   const { user } = useAuth();
   const [productName, setProductName] = useState("Hand Wash"); // ??
   const products = [
@@ -132,12 +133,8 @@ export default function ProductList() {
     Alert.alert("Added to Cart!", "", [{ text: "Ok" }]);
   };
 
-  const handleCart = async () => {
-    router.push("view-cart");
-  };
-
   const handleNavigation = (productName, uri) => {
-    navigation.navigate("product", { productName, uri });
+    router.push({ pathname:"product", params:{ productName, uri }});
   };
 
   const displayedProducts = filteredProducts || products;
@@ -148,29 +145,7 @@ export default function ProductList() {
 
   return (
     <SafeAreaView className="flex flex-1 bg-black/80">
-      <View className="h-16">
-        <View className="flex flex-row justify-end mx-4">
-          <Image
-            className="w-24 h-7 mt-5 mr-auto"
-            source={require("../../assets/whitetiktok.png")}
-          />
-          <View className="flex flex-row">
-            <TouchableOpacity className="mt-6 mr-4" onPress={handleCart}>
-              <ShoppingCart color="white" size={22} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="mt-6"
-              onPress={async () => {
-                await supabase.auth.signOut();
-              }}
-            >
-              <LogOut color="white" size={22} />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-
-      <View className="flex flex-row items-center bg-slate-50 mx-4 my-2 rounded-lg h-10">
+      <View className="flex flex-row items-center bg-slate-50 mx-4 my-2 rounded-lg h-10 mt-8">
         <Search className="ml-4 text-gray-500" size={20} />
         <TextInput
           placeholderTextColor="gray"

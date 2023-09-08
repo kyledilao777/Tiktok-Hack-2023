@@ -1,26 +1,15 @@
 import {
-  Alert,
-  FlatList,
-  Pressable,
   SafeAreaView,
   StyleSheet,
   StatusBar,
   View,
   TouchableOpacity,
-  Image,
 } from "react-native";
 import { supabase } from "../../lib/supabase";
 import { useEffect, useState } from "react";
-import { Checkbox, Text, Button } from "react-native-paper";
+import { Checkbox, Text } from "react-native-paper";
 import { useRouter, useSearchParams } from "expo-router";
 import * as Contacts from "expo-contacts";
-import {
-  LogOut,
-  ShoppingCart,
-  Users,
-  ShoppingBasket,
-  ArrowLeft,
-} from "lucide-react-native";
 import { useNavigation } from "expo-router";
 
 export default function HomeScreen() {
@@ -45,7 +34,7 @@ export default function HomeScreen() {
 
         setBuyers(uniqueBuyers);
       } catch (error) {
-        // Handle any errors
+        console.log("Error " + error);
       }
     }
 
@@ -58,14 +47,26 @@ export default function HomeScreen() {
             fields: [Contacts.Fields.PhoneNumbers],
           });
 
-          const matchedContacts = data.filter((contact) =>
-            buyers.includes(contact.phoneNumbers[0].number)
-          );
+          const matchedContacts = data.filter((contact) => {
+            const contactPhoneNumber = contact.phoneNumbers[0]?.number;
+            if (contactPhoneNumber) {
+              const normalizedContactPhoneNumber = contactPhoneNumber.replace(
+                /\s/g,
+                ""
+              );
+              const normalizedBuyers = buyers.map((buyer) =>
+                buyer.replace(/\s/g, "")
+              );
+
+              return normalizedBuyers.includes(normalizedContactPhoneNumber);
+            }
+            return false;
+          });
 
           setContacts(matchedContacts);
         }
       } catch (error) {
-        // Handle any errors
+        console.log("Error " + error);
       }
     }
 
@@ -84,7 +85,7 @@ export default function HomeScreen() {
       <TouchableOpacity
         onPress={() =>
           router.push({
-            pathname: "payment",
+            pathname: "group-purchase",
             params: { productName: productName, friendName: title.firstName },
           })
         }
@@ -100,42 +101,41 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }} className="bg-black/80">
-      <View className="h-16">
-        <View className="flex flex-row justify-between mx-4">
-          <View className="flex flex-row">
-            <TouchableOpacity
-              className="mt-6 mr-16"
-              onPress={() => navigation.navigate("index")}
-            >
-              <ArrowLeft color="white" size={24} />
-            </TouchableOpacity>
+      <View className="m-4">
+        <Text className="text-white text-2xl font-lato mx-4 my-4">
+          {productName}
+        </Text>
+        <Text className=" text-white mx-4 text-lg font-lato">Contacts</Text>
+        {contacts.map((contact, index) => (
+          <View className="bg-bgblue m-4 h-20 rounded-xl">
+            <View className="mx-2 my-auto">
+              <Text key={contact.id} style={styles.title} className="font-lato">
+                {contact.firstName}
+              </Text>
+              <Text
+                key={contact.firstName}
+                className="font-lato"
+                style={styles.phoneNumber}
+              >
+                {contact.phoneNumbers[0].number}
+              </Text>
+              <TouchableOpacity
+                onPress={() =>
+                  router.push({
+                    pathname: "group-purchase",
+                    params: {
+                      productName: productName,
+                      friendName: contact.firstName,
+                    },
+                  })
+                }
+              >
+                <Text className="font-lato"> Payment </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-
-          <View className="flex flex-row">
-            <TouchableOpacity className="mt-6 mr-4" onPress={handleCart}>
-              <ShoppingCart color="white" size={22} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="mt-6"
-              onPress={async () => {
-                await supabase.auth.signOut();
-              }}
-            >
-              <LogOut color="white" size={22} />
-            </TouchableOpacity>
-          </View>
-        </View>
+        ))}
       </View>
-      <Text className="text-white text-lg font-lato mx-4 my-4">
-        {productName}
-      </Text>
-      <Text className=" text-white mx-4 font-lato">Contacts</Text>
-      <FlatList
-        className="m-4 rounded-xl"
-        data={contacts}
-        renderItem={({ item }) => <Item title={item} />}
-        keyExtractor={(item) => item.id}
-      />
     </SafeAreaView>
   );
 }
@@ -152,6 +152,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   title: {
+    fontSize: 18,
+  },
+  phoneNumber: {
     fontSize: 16,
   },
 });

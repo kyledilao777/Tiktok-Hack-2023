@@ -11,7 +11,6 @@ import { supabase } from "../../lib/supabase";
 import { useNavigation } from "expo-router";
 import { useAuth } from "../../contexts/auth";
 import { useRoute } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ProductList() {
   const router = useRoute();
@@ -57,11 +56,11 @@ export default function ProductList() {
       }
     }
 
-    Alert.alert("Added to Cart!", "", [{ text: "Ok" }]);
+    Alert.alert("Added to Cart!", "", [{ text: "OK" }]);
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-black/80">
+    <SafeAreaView className="flex-1 bg-bgblack">
       <View className="mt-4">
         <Image className="h-[500px] w-full mx-auto" source={uri} />
 
@@ -82,7 +81,7 @@ export default function ProductList() {
         </TouchableOpacity>
         <TouchableOpacity
           className="items-center my-2"
-          onPress={() => navigation.navigate("friend-list")}
+          onPress={() => navigation.navigate("friend-list", { productName })}
         >
           <Users color="white" size={24} />
           <Text className="text-white font-calibri align-middle justify-center pl-1 mt-2">
@@ -92,7 +91,9 @@ export default function ProductList() {
 
         <TouchableOpacity
           className="items-center my-2"
-          onPress={() => navigation.navigate("group-purchase")}
+          onPress={() =>
+            navigation.navigate("group-purchase", { productName, price })
+          }
         >
           <ShoppingBasket color="white" size={24} />
           <View className="flex-row mt-2">

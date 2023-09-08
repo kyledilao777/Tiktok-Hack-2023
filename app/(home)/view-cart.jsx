@@ -99,105 +99,111 @@ export default function IndivCheckout() {
 
   return (
     <View className="flex-1 bg-black/80">
-      <ScrollView>
-        <View className="bg-neutral-600 m-3 rounded-lg">
-          <View className="m-2 p-2">
-            <View className="flex flex-row justify-between">
-              <Text className="font-lato text-lg text-white">Product</Text>
-              <Text className="font-lato text-lg text-white">Quantity</Text>
-              <Text className="font-lato text-lg text-white">Total Price</Text>
-            </View>
-            {ownProducts.map((product, index) => (
-              <View
-                key={index}
-                style={styles.product}
-                className="justify-between"
-              >
-                <View style={styles.productInfo}>
-                  <Text className="text-white font-lato mt-3">
-                    {product.name}
-                  </Text>
-                </View>
-                <View style={styles.groupOrder}>
-                  <Text className="text-white font-lato mt-3">
-                    {product.quantity}
-                  </Text>
-                </View>
-                <View style={styles.payment}>
-                  <Text className="text-white font-lato ml-8 mt-3">
-                    ${product.quantity * product.price}
-                  </Text>
-                </View>
-              </View>
-            ))}
-            <View>
-              <TouchableOpacity
-                className="rounded-md w-24 h-6 flex-end mt-5"
-                style={{
-                  alignSelf: "flex-end",
-                  borderColor: "#EE1D52",
-                  backgroundColor: "#EE1D52",
-                }}
-                onPress={handleOwnPay}
-              >
-                <Text className="text-white font-calibri item-center mx-auto my-auto">
-                  Pay
+      <View className="m-4">
+        <ScrollView>
+          <View className="bg-neutral-600 m-4 rounded-lg">
+            <View className="m-2 p-2">
+              <View className="flex flex-row justify-between">
+                <Text className="font-lato text-lg text-white">Product</Text>
+                <Text className="font-lato text-lg text-white">Quantity</Text>
+                <Text className="font-lato text-lg text-white">
+                  Total Price
                 </Text>
-              </TouchableOpacity>
+              </View>
+              {ownProducts.map((product, index) => (
+                <View
+                  key={index}
+                  style={styles.product}
+                  className="justify-between"
+                >
+                  <View style={styles.productInfo}>
+                    <Text className="text-white font-lato mt-3">
+                      {product.name}
+                    </Text>
+                  </View>
+                  <View style={styles.groupOrder}>
+                    <Text className="text-white font-lato mt-3">
+                      {product.quantity}
+                    </Text>
+                  </View>
+                  <View style={styles.payment}>
+                    <Text className="text-white font-lato ml-3 mt-3">
+                      ${product.quantity * product.price}
+                    </Text>
+                  </View>
+                </View>
+              ))}
+              <View>
+                <TouchableOpacity
+                  className="rounded-md w-[90px] h-6 flex-end mt-5"
+                  style={{
+                    alignSelf: "flex-end",
+                    borderColor: "#EE1D52",
+                    backgroundColor: "#EE1D52",
+                  }}
+                  onPress={handleOwnPay}
+                >
+                  <Text className="text-white font-calibri item-center mx-auto my-auto">
+                    Pay
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
 
-        <View style={styles.header2}>
-          <Text className="text-white font-calibri text-xl">
-            Pending Group Order Purchase
-          </Text>
-        </View>
+          <View style={styles.header2}>
+            <Text className="text-white font-calibri text-xl">
+              Pending Group Order Purchase
+            </Text>
+          </View>
 
-        <View className="bg-neutral-600 m-3 rounded-lg">
-          <View className="m-2 p-2">
-            <View className="flex flex-row justify-between">
-              <Text className="font-lato text-lg text-white">Product</Text>
-              <Text className="font-lato text-lg text-white">Quantity</Text>
-              <Text className="font-lato text-lg text-white">Total Price</Text>
-            </View>
-            {group.map((product, index) => (
-              <View key={index} style={styles.product}>
-                <View style={styles.productInfo}>
-                  <Text className="text-white font-lato mt-3">
-                    {product.name}
-                  </Text>
-                </View>
-                <View style={styles.groupOrder}>
-                  <Text className="text-white font-lato mt-3">
-                    {product.quantity}
-                  </Text>
-                </View>
-                <View style={styles.payment}>
-                  <Text className="text-white font-lato ml-8 mt-3">
-                    ${product.quantity * product.price}
-                  </Text>
-                </View>
-              </View>
-            ))}
-            <View>
-              <TouchableOpacity
-                className="rounded-md w-24 h-6 flex-end mt-5"
-                style={{
-                  alignSelf: "flex-end",
-                  borderColor: "#EE1D52",
-                  backgroundColor: "#EE1D52",
-                }}
-                onPress={handleGroupPay}
-              >
-                <Text className="text-white font-calibri item-center mx-auto my-auto">
-                  Pay
+          <View className="bg-neutral-600 m-3 rounded-lg">
+            <View className="m-2 p-2">
+              <View className="flex flex-row justify-between">
+                <Text className="font-lato text-lg text-white">Product</Text>
+                <Text className="font-lato text-lg text-white">Quantity</Text>
+                <Text className="font-lato text-lg text-white">
+                  Total Price
                 </Text>
-              </TouchableOpacity>
+              </View>
+              {group.map((product, index) => (
+                <View key={index} style={styles.product}>
+                  <View style={styles.productInfo}>
+                    <Text className="text-white font-lato mt-3">
+                      {product.name}
+                    </Text>
+                  </View>
+                  <View style={styles.groupOrder}>
+                    <Text className="text-white font-lato mt-3">
+                      {product.quantity}
+                    </Text>
+                  </View>
+                  <View style={styles.payment}>
+                    <Text className="text-white font-lato ml-8 mt-3">
+                      ${product.quantity * product.price}
+                    </Text>
+                  </View>
+                </View>
+              ))}
+              <View>
+                <TouchableOpacity
+                  className="rounded-md w-[90px] h-6 flex-end mt-5"
+                  style={{
+                    alignSelf: "flex-end",
+                    borderColor: "#EE1D52",
+                    backgroundColor: "#EE1D52",
+                  }}
+                  onPress={handleGroupPay}
+                >
+                  <Text className="text-white font-calibri item-center mx-auto my-auto">
+                    Pay
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </View>
   );
 }
@@ -226,8 +232,8 @@ const styles = StyleSheet.create({
   },
   payment: {
     flex: 0.5,
-    alignItems: "flex-end",
-    marginRight: 34,
+    alignItems: "flex-start",
+    marginRight: 36,
   },
   button: {
     alignItems: "flex-end",

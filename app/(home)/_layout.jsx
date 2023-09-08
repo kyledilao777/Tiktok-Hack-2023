@@ -17,8 +17,72 @@ export default function HomeScreen() {
         },
       }}
     >
-      <Stack.Screen name="friend-list" options={{ headerShown: false }} />
-      <Stack.Screen name="group-purchase" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="friend-list"
+        options={{
+          headerTitle: "Find friends",
+          headerTintColor: "#FFF",
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.back()}>
+              <ArrowLeft color="white" size={24} />
+            </TouchableOpacity>
+          ),
+          headerStyle: {
+            backgroundColor: "#303030",
+          },
+          headerShadowVisible: false,
+          headerRight: () => (
+            <View className="mr-0 flex flex-row">
+              <TouchableOpacity
+                className="mr-5"
+                onPress={() => router.push("view-cart")}
+              >
+                <ShoppingCart color="white" size={22} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={async () => {
+                  await supabase.auth.signOut();
+                }}
+              >
+                <LogOut color="white" size={22} />
+              </TouchableOpacity>
+            </View>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="group-purchase"
+        options={{
+          headerTitle: "Group Purchase",
+          headerTintColor: "#FFF",
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.back()}>
+              <ArrowLeft color="white" size={24} />
+            </TouchableOpacity>
+          ),
+          headerStyle: {
+            backgroundColor: "#303030",
+          },
+          headerShadowVisible: false,
+          headerRight: () => (
+            <View className="mr-0 flex flex-row">
+              <TouchableOpacity
+                className="mr-5"
+                onPress={() => router.push("view-cart")}
+              >
+                <ShoppingCart color="white" size={22} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={async () => {
+                  await supabase.auth.signOut();
+                }}
+              >
+                <LogOut color="white" size={22} />
+              </TouchableOpacity>
+            </View>
+          ),
+        }}
+      />
       <Stack.Screen
         name="index"
         options={{
@@ -62,7 +126,7 @@ export default function HomeScreen() {
             </TouchableOpacity>
           ),
           headerStyle: {
-            backgroundColor: "#303030",
+            backgroundColor: "#010101",
           },
           headerShadowVisible: false,
           headerRight: () => (

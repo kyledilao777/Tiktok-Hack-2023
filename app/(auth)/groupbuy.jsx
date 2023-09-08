@@ -3,23 +3,85 @@ import { supabase } from "../../lib/supabase";
 import { View, FlatList } from "react-native";
 import { Link, useRouter, useSearchParams } from "expo-router";
 import { Text, TextInput, ActivityIndicator, Button, Modal } from 'react-native-paper';
-import ProductPage from "./login";
 import { MediaTypeOptions } from "expo-image-picker";
 
 export default function GroupBuyPage() {
-    const [isModalVisible, setModalVisible] = useState(false);
-    const [items, setItems] = useState([]);
-    const toggleModal = () => {
-        setModalVisible(!isModalVisible);
-      };
-    const accounts = [
-        { name: 'Kyle', details: 'Friends' },
-        { name: 'Tracy', details: 'Friends with Kyle' },
-        { name: 'Darren', details: 'Follows You' },
-        { name: 'Jayson', details: 'People you may know' },
-        { name: 'Kai Jie', details: 'People you may know'}
-    ];
 
+    const minimumOrder = 50;
+    const newUserDiscount = 0.9;
+    const groupOrderDiscount = 0.95;
+
+    const { productName } = useSearchParams();
+    const { productPrice } = useSearchParams();
+    const [quantity, setValue] = useState(0);
+    const [currentProductPrice, setOutputValue] = useState(productPrice);
+    const [currentGroup, setCurrentGroup] = useState([{ first_name: 'You', details: 'Owner', quantity: quantity, new_user:false}]);
+    const [accounts, setUsers] = useState([]);
+    const [discounts, setDiscounts] = useState([]);
+    const [isModalVisible, setModalVisible] = useState(false);
+    
+    useEffect(() => {
+        const fetchProfiles = async () => {
+            try {
+              const { data: profiles, error } = await supabase
+                .from("profiles")
+                .select("first_name, connection_type, new_user");      
+              if (error) {
+                console.error("Error while fetching profiles:", error);
+                return;
+              }
+              setUsers(profiles)
+            } catch (error) {
+              console.error("Error during fetchProfiles:", error);
+            }
+        };
+        
+        fetchProfiles();
+        }, []);
+
+    useEffect(() => {
+        const fetchDiscounts = async () => {
+            try {
+            const { data: discount, error } = await supabase
+                .from("discounts")
+                .select("discount_name, discount_multiplier");      
+              if (error) {
+                console.error("Error while fetching discounts:", error);
+                return;
+              }
+              setDiscounts(discount)
+            } catch (error) {
+              console.error("Error during fetchDiscounts:", error);
+            }
+        };
+            
+        fetchDiscounts();
+    }, []);
+
+    useEffect(() => {
+        const setDiscounted = async () => {
+            if (quantity === 50) {
+                setOutputValue(currentProductPrice * groupOrderDiscount);
+            } else {
+                setOutputValue(currentProductPrice);
+            }
+        }
+                
+        setDiscounted();
+        }, [quantity]);
+
+    useEffect(() => {
+        const setNewUserDiscount = async () => {
+            if (newUserPresent) {
+                setOutputValue(currentProductPrice * newUserDiscount)
+        } else {
+                setOutputValue(currentProductPrice)
+        }
+    } 
+    
+    setNewUserDiscount();
+        }, [newUserPresent])
+    
     const decreaseQuantity = () => {
         setValue(quantity - 1);
         currentGroup[0].quantity = quantity+1;
@@ -30,26 +92,19 @@ export default function GroupBuyPage() {
         currentGroup[0].quantity = quantity+1;
     };
 
-    useEffect(() => {
-        if (quantity >= 50) {
-            setOutputValue(productPrice * 0.9);
-        }
-      }, [productPrice]);
-
-    const minimumOrder = 50;
-
-    const [quantity, setValue] = useState(0);
-    const [currentGroup, setCurrentGroup] = useState([{ name: 'You', details: 'Yourself', quantity: quantity, state: "Owner" }]);
-    const { productName } = useSearchParams();
-    const { productPrice } = useSearchParams();
-    const [currentProductPrice, setOutputValue] = useState(productPrice);
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
+      };
+    
+    const newUserPresent = currentGroup.some(item => item.new_user === true);
+    const isInvited = async (user) => currentGroup.some(item => item.first_name === user.first_name);
 
     const showInvited = ({ item }) => (
         <View style={{ padding: 10, borderBottomWidth: 1, borderColor: 'white' }}>
-          <Text style={{fontWeight: 'bold', fontSize: 16, marginLeft: 60, marginTop: 20,}}>{item.name}</Text>
-          <Text style={{fontSize: 16, marginLeft: 120, marginTop: -20,}}>{item.state}</Text>
+          <Text style={{fontWeight: 'bold', fontSize: 16, marginLeft: 60, marginTop: 20,}}>{item.first_name}</Text>
+          <Text style={{fontSize: 16, marginLeft: 120, marginTop: -20,}}>{item.details}</Text>
           <Text style={{fontSize: 16, marginLeft: 190, marginTop: -20,}}>Quantity: {item.quantity}</Text>
-          <Text style={{fontSize: 16, marginLeft: 290, marginTop: -20,}}>Subtotal: ${item.quantity * productPrice}</Text>
+          <Text style={{fontSize: 16, marginLeft: 290, marginTop: -20,}}>Subtotal: ${Math.round(item.quantity * currentProductPrice,2)}</Text>
           <View style={{width: 50, height: 50, borderRadius:30, backgroundColor: 'lightgray', justifyContent: 'center', alignItems: 'center', marginLeft: 3, marginTop: -30}}>
                 <Text style={[styles.photoText, {fontSize:12}]}>Photo</Text>
             </View>
@@ -83,8 +138,6 @@ export default function GroupBuyPage() {
                 <Text style ={[styles.label, {fontSize:18, fontWeight:"bold", marginTop: 0, marginLeft:90, textAlign: 'center'}]}>Unit Price: ${currentProductPrice}</Text>
             </View>
 
-
-
             <Text style={[styles.label, {fontSize:18, marginTop: 20, marginLeft:120, textAlign: 'center'}]}>
                 {quantity}
             </Text>
@@ -113,10 +166,10 @@ export default function GroupBuyPage() {
 
 
             <Text style={[styles.label, {marginTop: 60, fontSize: 14}]}>
-                This product has a minimum order value of: ${minimumOrder}
+                This product has a minimum order units of {minimumOrder}
             </Text>
             <Text style={[styles.label, {marginTop: 0, fontSize: 14}]}>
-                Current combined order value: ${quantity * productPrice}
+                Current combined order units: {quantity}
             </Text>
 
             <Button
@@ -138,7 +191,7 @@ export default function GroupBuyPage() {
                 <FlatList
                     data={currentGroup}
                     renderItem={showInvited}
-                    keyExtractor={(item) => item.name}
+                    keyExtractor={(item) => item.first_name}
                 />
             </View>
 
@@ -147,29 +200,34 @@ export default function GroupBuyPage() {
                 Invite one new user for an additional 10% discount! {"\n"}
                 Spend over $100 for an additional 5% discount!
             </Text>
-            <Link href="/groupbuy" style={{marginTop: 10, marginLeft: 200}}>
+                {(quantity < minimumOrder) ? ( 
                 <Button
-                    style={[styles.button, {width:200,
+                    style={[styles.button, {width:200, marginLeft: 200, marginTop: 10,
                         alignSelf:'stretch'}]}
                     mode="contained"
                     labelStyle={styles.buttonText}
                     onPress={() => {
-                        if (quantity * productPrice >= minimumOrder) {
-                            <Link href="/login" style={{ marginTop: 10, marginLeft: 20 }}>
-                                <Text>Go to Product</Text>
-                            </Link>
-                            alert("wait")
-                        } else {
-                            alert("Minimum order value not met.");
-                        }
+                        alert("Minimum order value not met.");
                     }}
                 >
                     Confirm Order
-                </Button>
-            </Link>
+                </Button>)
 
+                : (
+                    <Button
+                    style={[styles.button, {width:200, marginLeft: 200, marginTop: 10,
+                        alignSelf:'stretch'}]}
+                    mode="contained"
+                    labelStyle={styles.buttonText}
+                    onPress={() => {
+                    }}
+                >
+                    <Link href="/product">Confirm Order</Link>
+                </Button>
+                )}
+        
             <Button
-                style={[styles.button, {width:150, marginLeft: 20, marginTop: -20, height: 42,
+                style={[styles.button, {width:150, marginLeft: 20, marginTop: -40, height: 42, 
                     alignSelf:'stretch', backgroundColor:'lightgrey'}]}
                 mode="contained"
                 labelStyle={styles.buttonText}
@@ -203,9 +261,7 @@ export default function GroupBuyPage() {
                     <Text style={[styles.label, { marginBottom: 10, marginLeft: 5}]}> Suggested Accounts:</Text>
                     <View>
                     {accounts.map((item) => (
-                        <View key={item.name}>
-
-
+                        <View key={item.first_name}>
                             <View style={{width: 50, 
                                 height: 50, 
                                 borderRadius:30, 
@@ -217,8 +273,8 @@ export default function GroupBuyPage() {
                                 <Text style={[styles.photoText, {fontSize:12}]}>Photo</Text>
                             </View>
 
-                            <Text style={[styles.label, { marginBottom: 0, marginLeft: 70, marginTop: -45 }]}> {item.name}</Text>
-                            <Text style={[styles.label, { marginBottom: 0, marginLeft: 70, marginTop: 0 }]}> {item.details}</Text>
+                            <Text style={[styles.label, { marginBottom: 0, marginLeft: 70, marginTop: -45 }]}> {item.first_name}</Text>
+                            <Text style={[styles.label, { marginBottom: 0, marginLeft: 70, marginTop: 0 }]}> {item.connection_type}</Text>
 
                             <Button
                             style={[
@@ -228,9 +284,12 @@ export default function GroupBuyPage() {
                             mode="contained"
                             labelStyle={styles.buttonText}
                             onPress={() => {
-                                item.state = "Invited";
+                                item.details = "Invited";
                                 item.quantity = 0;
-                                currentGroup.push(item);
+                                if (currentGroup.indexOf(item) === -1) {
+                                    currentGroup.push(item);
+                                    console.log(currentGroup);
+                                }
                                 setModalVisible(!isModalVisible)
                                 ;
                             }}  

@@ -58,21 +58,31 @@ export default function HomeScreen() {
             fields: [Contacts.Fields.PhoneNumbers],
           });
 
-          const matchedContacts = data.filter((contact) =>
-            buyers.includes(contact.phoneNumbers[0].number)
-          );
-
+          const matchedContacts = data.filter((contact) => {
+            const contactPhoneNumber = contact.phoneNumbers[0]?.number;
+            if (contactPhoneNumber) {
+              // Normalize and trim both the contact phone number and buyers' phone numbers
+              const normalizedContactPhoneNumber = contactPhoneNumber.replace(/\s/g, ''); // Remove spaces
+              const normalizedBuyers = buyers.map((buyer) => buyer.replace(/\s/g, '')); // Remove spaces
+          
+              return normalizedBuyers.includes(normalizedContactPhoneNumber);
+            }
+            return false;
+          });
+  
           setContacts(matchedContacts);
         }
       } catch (error) {
         // Handle any errors
       }
     }
-
+ 
     fetchBuyers();
     fetchContacts();
   }, [contacts]);
 
+  console.log(contacts)
+  
   const Item = ({ title }) => (
     <View style={styles.item}>
       <Text key={title.id} style={styles.title}>
@@ -84,7 +94,7 @@ export default function HomeScreen() {
       <TouchableOpacity
         onPress={() =>
           router.push({
-            pathname: "payment",
+            pathname: "group-purchase",
             params: { productName: productName, friendName: title.firstName },
           })
         }

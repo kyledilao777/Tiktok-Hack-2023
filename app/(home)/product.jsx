@@ -99,7 +99,7 @@ export default function ProductList() {
             }}
             onPress={() =>
               router.push({
-                pathname: "list",
+                pathname: "friend-list",
                 params: { productName: productName },
               })
             }

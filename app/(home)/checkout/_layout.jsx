@@ -6,7 +6,7 @@ export default function HomeScreen() {
       <Tabs.Screen name="index" options={{ title: "Todos" }} />
       <Tabs.Screen
         name="indivcart"
-        options={{ headerShown: false, title: "ucok" }}
+        options={{ headerShown: false, title: "Cart" }}
       />
       <Tabs.Screen name="profile" options={{ title: "Checkout" }} />
     </Tabs>

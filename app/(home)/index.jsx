@@ -36,7 +36,7 @@ export default function ProductList() {
     },
     {
       shopName: "H&M",
-      productName: "Shirt",
+      productName: "T-Shirt",
       price: 23,
       uri: require("../../assets/tshirt.jpeg"),
     },
@@ -141,9 +141,9 @@ export default function ProductList() {
     );
   };
 
-  const handleNavigation = ( productName, uri ) => {
-    navigation.navigate('product', { productName, uri })
-  }
+  const handleNavigation = (productName, uri) => {
+    navigation.navigate("product", { productName, uri });
+  };
 
   return (
     <SafeAreaView className="flex flex-1 bg-black/80">
@@ -170,8 +170,8 @@ export default function ProductList() {
       </View>
 
       <View className="m-4">
-        <TextInput className="h-12"></TextInput>
-        <View className="flex-row justify-center rounded-b-lg bg-bgred space-x-20 py-2">
+        <TextInput className="h-12 bg-slate-50 rounded-t-lg"></TextInput>
+        <View className="flex-row justify-center rounded-b-lg bg-bgred space-x-24 py-2">
           <View className="">
             <TouchableOpacity
               className="items-center my-2"
@@ -184,8 +184,7 @@ export default function ProductList() {
             >
               <Users color="white" size={24} />
               <Text className="text-white font-calibri align-middle justify-center pl-1 mt-2">
-                {" "}
-                Find Friends{" "}
+                Find Friends
               </Text>
             </TouchableOpacity>
           </View>
@@ -212,23 +211,23 @@ export default function ProductList() {
           {products.map((product, index) => (
             <TouchableOpacity
               key={index}
-              className="bg-bgblack/50 h-56 w-[156px] rounded-lg sm:h-64 sm:w-[170px] md:h-[270px] md:w-[180px]"
+              className="bg-bgblack h-56 w-[156px] rounded-lg sm:h-64 sm:w-[170px] md:h-[270px] md:w-[180px]"
               onPress={() => handleNavigation(product.productName, product.uri)}
             >
               <Image
                 className="w-[156px] h-[180px] md:h-[243px] md:w-[190px] sm:w-[180px] sm:h-56 mx-auto rounded-t-lg"
                 source={product.uri}
-              />  
+              />
               <View className="flex flex-row mt-1 justify-between px-3">
-                <Text className="text-white font-lato text-[15px]">
+                <Text className="text-white font-lato text-[16px]">
                   {product.productName}
                 </Text>
-                <Text className="text-white font-lato text-[15px]">
+                <Text className="text-white font-lato text-[16px]">
                   ${product.price}
                 </Text>
               </View>
-              <View className="flex flex-row mt-1 justify-between">
-                <Text className="text-slate-300 text-md font-regencie px-3 pb-1">
+              <View className="flex flex-row justify-between mt-0.5">
+                <Text className="text-slate-300 text-[12px] font-regencie pl-3">
                   {product.shopName}
                 </Text>
               </View>

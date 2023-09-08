@@ -58,7 +58,7 @@ export default function LoginPage() {
         <View className="m-6">
           <Text className=" text-white font-lato text-[16px] mb-1">Email</Text>
           <TextInput
-            className="mb-4"
+            className="mb-4 bg-slate-50"
             autoCapitalize="none"
             textContentType="emailAddress"
             value={email}
@@ -68,7 +68,7 @@ export default function LoginPage() {
             Password
           </Text>
           <TextInput
-            className="mb-4"
+            className="mb-4 bg-slate-50"
             secureTextEntry
             autoCapitalize="none"
             textContentType="password"

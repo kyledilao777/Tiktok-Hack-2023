@@ -11,7 +11,7 @@ import { supabase } from "../../lib/supabase";
 import { Button, TextInput } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useAuth } from "../../contexts/auth";
-import { useRoute } from '@react-navigation/native';
+import { useRoute } from "@react-navigation/native";
 
 export default function ProductList() {
   const router = useRoute();
@@ -70,10 +70,7 @@ export default function ProductList() {
     <SafeAreaView className="justify-center align-middle flex-1 bg-black/80">
       <View className="">
         <View className="">
-          <Image
-            className="w-[200px] h-[400px] mx-auto"
-            source={uri}
-          />
+          <Image className="w-[200px] h-[400px] mx-auto" source={uri} />
         </View>
 
         <View>

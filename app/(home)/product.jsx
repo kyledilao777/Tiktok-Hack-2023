@@ -71,6 +71,10 @@ export default function ProductList() {
     navigation.navigate("view-cart");
   }
 
+  const addCart = (shopeName, quantity, ) => {
+
+  }
+
   return (
     <SafeAreaView className="flex-1 bg-black/80">
       <View className="h-16">

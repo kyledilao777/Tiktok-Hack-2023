@@ -191,14 +191,14 @@ export default function ProductList() {
           {filteredDisplayProducts.map((product, index) => (
             <TouchableOpacity
               key={index}
-              className="bg-bgred h-56 w-[156px] rounded-lg sm:h-64 sm:w-[170px] md:h-[270px] md:w-[180px]"
+              className="bg-bgred h-56 w-[156px] rounded-lg md:h-64 md:w-[160px] xl:h-[270px] xl:w-[180px] lg:w-[165px]"
               onPress={() => handleNavigation(product.productName, product.uri)}
             >
               <Image
-                className="w-[156px] h-[180px] md:h-[243px] md:w-[190px] sm:w-[180px] sm:h-56 mx-auto rounded-t-lg"
+                className="w-[156px] h-[180px] xl:h-[243px] xl:w-[190px] md:w-[160px] lg:w-[165px] lg:h-56 md:h-52 mx-auto rounded-t-lg"
                 source={product.uri}
               />
-              <View className="flex flex-row mt-1 justify-between px-3">
+              <View className="flex flex-row mt-1 justify-between px-3 lg:mt-3">
                 <Text className="text-white font-lato text-[16px]">
                   {product.productName}
                 </Text>

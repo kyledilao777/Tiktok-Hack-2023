@@ -12,20 +12,15 @@ import { supabase } from "../../lib/supabase";
 import { TextInput } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useAuth } from "../../contexts/auth";
-import { useNavigation } from "@react-navigation/native";
 import {
   LogOut,
   ShoppingCart,
-  Users,
-  ShoppingBasket,
   Search,
 } from "lucide-react-native";
 
 export default function ProductList() {
   const router = useRouter();
-  const navigation = useNavigation();
   const { user } = useAuth();
-  const [productName, setProductName] = useState("Hand Wash"); // ??
   const products = [
     {
       shopName: "Converse",
@@ -91,53 +86,8 @@ export default function ProductList() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(null);
 
-  const handleSubmit = async () => {
-    const { data: existingProducts, error } = await supabase
-      .from("products")
-      .select("id, name, quantity")
-      .eq("name", productName);
-
-    if (error) {
-      console.error("Error while fetching products:", error);
-      return;
-    }
-
-    if (existingProducts && existingProducts.length > 0) {
-      const existingProduct = existingProducts[0];
-      const newQuantity = existingProduct.quantity + 1;
-
-      const { error: updateError } = await supabase
-        .from("products")
-        .update({ quantity: newQuantity })
-        .eq("id", existingProduct.id);
-
-      if (updateError) {
-        console.error("Error while updating quantity:", updateError);
-      }
-    } else {
-      // manually insert data in the database here for DEMO
-      const { error: insertError } = await supabase.from("products").insert({
-        name: productName,
-        buyer: user.user_metadata.phone_number,
-        quantity: 1,
-        price: 8,
-        group: false,
-      });
-
-      if (insertError) {
-        console.error("Error while inserting product:", insertError);
-      }
-    }
-
-    Alert.alert("Added to Cart!", "", [{ text: "Ok" }]);
-  };
-
-  const handleCart = async () => {
-    router.push("view-cart");
-  };
-
   const handleNavigation = (productName, uri) => {
-    navigation.navigate("product", { productName, uri });
+    router.push({ pathname:"product", params:{ productName, uri }});
   };
 
   const displayedProducts = filteredProducts || products;
@@ -148,29 +98,7 @@ export default function ProductList() {
 
   return (
     <SafeAreaView className="flex flex-1 bg-black/80">
-      <View className="h-16">
-        <View className="flex flex-row justify-end mx-4">
-          <Image
-            className="w-24 h-7 mt-5 mr-auto"
-            source={require("../../assets/whitetiktok.png")}
-          />
-          <View className="flex flex-row">
-            <TouchableOpacity className="mt-6 mr-4" onPress={handleCart}>
-              <ShoppingCart color="white" size={22} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="mt-6"
-              onPress={async () => {
-                await supabase.auth.signOut();
-              }}
-            >
-              <LogOut color="white" size={22} />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-
-      <View className="flex flex-row items-center bg-slate-50 mx-4 my-2 rounded-lg h-10">
+      <View className="flex flex-row items-center bg-slate-50 mx-4 my-2 rounded-lg h-10 mt-8">
         <Search className="ml-4 text-gray-500" size={20} />
         <TextInput
           placeholderTextColor="gray"

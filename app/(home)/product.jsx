@@ -71,46 +71,14 @@ export default function ProductList() {
     navigation.navigate("view-cart");
   }
 
-  const addCart = (shopeName, quantity, ) => {
-
-  }
-
   return (
     <SafeAreaView className="flex-1 bg-black/80">
-      <View className="h-16">
-        <View className="flex flex-row justify-between mx-4">
-          <View className="flex flex-row">
-            <TouchableOpacity
-              className="mt-6 mr-16"
-              onPress={() => goBackToMainPage()}
-            >
-              <ArrowLeft color="white" size={24} />
-            </TouchableOpacity>
-          </View>
-
-          <View className="flex flex-row">
-            <TouchableOpacity className="mt-6 mr-4" onPress={viewCart}>
-              <ShoppingCart color="white" size={22} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="mt-6"
-              onPress={async () => {
-                await supabase.auth.signOut();
-              }}
-            >
-              <LogOut color="white" size={22} />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-      <View className="">
-        <View className="">
+      <View className="mt-8">
+        <View>
           <Image className="w-[200px] h-[400px] mx-auto" source={uri} />
         </View>
-
         <View>
           <Text className="text-xl  text-white font-calibri">
-            {" "}
             {productName}
           </Text>
         </View>

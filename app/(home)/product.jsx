@@ -6,14 +6,18 @@ import {
   Image,
   View,
 } from "react-native";
+import { ArrowLeft, ShoppingCart, LogOut } from "lucide-react-native";
 import { useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { useRouter } from "expo-router";
+import { useNavigation } from "expo-router";
 import { useAuth } from "../../contexts/auth";
 import { useRoute } from "@react-navigation/native";
 
+
 export default function ProductList() {
   const router = useRoute();
+  const navigation = useNavigation();
   const { productName, uri } = router.params;
   const { user } = useAuth();
   const [productName2, setProductName] = useState("Hand Wash");
@@ -59,14 +63,42 @@ export default function ProductList() {
     Alert.alert("Added to Cart!", "", [{ text: "Ok" }]);
   };
 
-  const handleCart = async () => {
-    router.push("checkout/indivcart");
-  };
+  const goBackToMainPage = () => {
+    navigation.navigate("index");
+  }
 
-  console.log(productName);
+  const viewCart = () => {
+    navigation.navigate("view-cart");
+  }
 
   return (
-    <SafeAreaView className="justify-center align-middle flex-1 bg-black/80">
+    <SafeAreaView className="flex-1 bg-black/80">
+      <View className="h-16">
+        <View className="flex flex-row justify-between mx-4">
+          <View className="flex flex-row">
+            <TouchableOpacity
+              className="mt-6 mr-16"
+              onPress={() => goBackToMainPage()}
+            >
+              <ArrowLeft color="white" size={24} />
+            </TouchableOpacity>
+          </View>
+
+          <View className="flex flex-row">
+            <TouchableOpacity className="mt-6 mr-4" onPress={viewCart}>
+              <ShoppingCart color="white" size={22} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              className="mt-6"
+              onPress={async () => {
+                await supabase.auth.signOut();
+              }}
+            >
+              <LogOut color="white" size={22} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
       <View className="">
         <View className="">
           <Image className="w-[200px] h-[400px] mx-auto" source={uri} />
@@ -127,27 +159,7 @@ export default function ProductList() {
           </TouchableOpacity>
         </View>
 
-        <View>
-          <TouchableOpacity
-            style={{
-              alignSelf: "flex-end",
-              marginRight: 20,
-              marginTop: 10,
-              borderColor: "white",
-              borderWidth: 2,
-              paddingHorizontal: 5,
-              paddingVertical: 2,
-              width: 95,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "",
-            }}
-            className="text-white"
-            onPress={handleCart}
-          >
-            <Text className="text-white font-calibri"> View Cart </Text>
-          </TouchableOpacity>
-        </View>
+        
       </View>
       <View>
         <TouchableOpacity

@@ -133,7 +133,7 @@ export default function ProductList() {
   };
 
   const handleCart = async () => {
-    router.push("checkout/indivcart");
+    router.push("view-cart");
   };
 
   const handleNavigation = (productName, uri) => {
@@ -202,12 +202,11 @@ export default function ProductList() {
                 <Text className="text-white font-lato text-[16px]">
                   {product.productName}
                 </Text>
-                <Text className="text-white font-lato text-[16px]">
-                  <Text className="text-bgblue">$</Text>
-                  {product.price}
+                <Text className="text-white font-lato text-[16px]"> 
+                  ${product.price}
                 </Text>
               </View>
-              <View className="flex flex-row justify-between mt-0.5">
+              <View className="flex flex-row justify-between sm:mt-0.5">
                 <Text className="text-slate-100 text-[12px] font-regencie pl-3">
                   {product.shopName}
                 </Text>

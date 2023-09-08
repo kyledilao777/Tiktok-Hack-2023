@@ -1,13 +1,23 @@
 import { useState, useEffect } from "react";
 import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Text, TextInput, Button, ActivityIndicator } from "react-native-paper";
-import { supabase } from "../../../lib/supabase";
-import { useAuth } from "../../../contexts/auth";
+import { supabase } from "../../lib/supabase";
+import { useAuth } from "../../contexts/auth";
 import { useRouter } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
+import {
+  LogOut,
+  ShoppingCart,
+  Users,
+  ShoppingBasket,
+  Search,
+  ArrowLeft
+} from "lucide-react-native";
+import { useNavigation } from "expo-router";
 
 export default function IndivCheckout() {
   const router = useRouter();
+  const navigation = useNavigation();
   const [ownProducts, setOwnProducts] = useState([]);
   const [group, setGroup] = useState([]);
 
@@ -95,8 +105,35 @@ export default function IndivCheckout() {
     }
   };
 
+  const goBackToMainPage = () => {
+    navigation.navigate("index");
+  }
+
   return (
     <View className="flex-1 bg-black/80">
+      <View className="h-16">
+        <View className="flex flex-row justify-between mx-4">
+          <View className="flex flex-row">
+            <TouchableOpacity
+              className="mt-6 mr-16"
+              onPress={goBackToMainPage}
+            >
+              <ArrowLeft color="white" size={24} />
+            </TouchableOpacity>
+          </View>
+
+          <View className="flex flex-row">
+            <TouchableOpacity
+              className="mt-6"
+              onPress={async () => {
+                await supabase.auth.signOut();
+              }}
+            >
+              <LogOut color="white" size={22} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
       <View className="justify-center align-middle" style={styles.header}>
         <Text className="text-white font-lato text-lg mt-4">Items Ordered</Text>
       </View>

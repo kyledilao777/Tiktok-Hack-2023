@@ -95,7 +95,7 @@ export default function HomeScreen() {
   );
 
   const handleCart = async () => {
-    router.push("checkout/indivcart");
+    router.push("view-cart");
   };
 
   return (

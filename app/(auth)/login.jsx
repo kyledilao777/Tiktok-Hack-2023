@@ -71,6 +71,7 @@ export default function LoginPage() {
           <TextInput
             className="mb-4 bg-slate-50"
             selectionColor="#69C9D0"
+            secureTextEntry
             activeUnderlineColor={"transparent"}
             autoCapitalize="none"
             textContentType="password"

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
 import { supabase } from "../../lib/supabase";
-import { View, FlatList, ScrollView, TouchableOpacity } from "react-native";
-import { Link, useSearchParams, useRouter} from "expo-router";
+import { View, ScrollView, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
 import { Text, Button, Modal } from "react-native-paper";
 import { useAuth } from "../../contexts/auth";
-import { X } from "lucide-react-native";
+import { X, PlusCircle } from "lucide-react-native";
 
 export default function GroupBuyPage() {
   const minimumOrder = 50;
@@ -19,7 +19,7 @@ export default function GroupBuyPage() {
   const [currentGroup, setCurrentGroup] = useState([
     {
       first_name: "You",
-      details: "Owner",
+      // details: "Owner",
       quantity: quantity,
       new_user: false,
     },
@@ -28,7 +28,6 @@ export default function GroupBuyPage() {
   const [discounts, setDiscounts] = useState([]);
   const [isModalVisible, setModalVisible] = useState(false);
   const { user } = useAuth();
-  
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -107,124 +106,85 @@ export default function GroupBuyPage() {
   };
 
   const newUserPresent = currentGroup.some((item) => item.new_user === true);
-  const isInvited = async (user) =>
-    currentGroup.some((item) => item.first_name === user.first_name);
-
-  const showInvited = ({ item }) => (
-    <View style={{ padding: 10, borderBottomWidth: 1, borderColor: "white" }}>
-      <Text
-        style={{
-          fontWeight: "bold",
-          fontSize: 16,
-          marginLeft: 60,
-          marginTop: 20,
-        }}
-      >
-        {item.first_name}
-      </Text>
-      <Text style={{ fontSize: 16, marginLeft: 120, marginTop: -20 }}>
-        {item.details}
-      </Text>
-      <Text style={{ fontSize: 16, marginLeft: 190, marginTop: -20 }}>
-        Quantity: {item.quantity}
-      </Text>
-      <Text style={{ fontSize: 16, marginLeft: 290, marginTop: -20 }}>
-        Subtotal: ${Math.round(item.quantity * currentProductPrice, 2)}
-      </Text>
-    </View>
-  );
+  // const isInvited = async (user) =>
+  //   currentGroup.some((item) => item.first_name === user.first_name);
 
   const handleSubmit = async () => {
-    const { error } = await supabase.from('products').insert({
-        name: productName,
-        buyer: user.user_metadata.phone_number,
-        quantity: quantity,
-        price: price,
-        group: true,
-    })
-    route.push('view-cart');
-  }
+    const { error } = await supabase.from("products").insert({
+      name: productName,
+      buyer: user.user_metadata.phone_number,
+      quantity: quantity,
+      price: price,
+      group: true,
+    });
+    route.push("view-cart");
+  };
 
   return (
-    <View className="bg-bgblack/80 flex-1 ">
+    <ScrollView className="bg-bgblack/80 flex-1 ">
       <View className="m-8">
         <View className="flex flex-row justify-between items-center">
-          <View>
-            <Text className="text-white text-2xl font-lato">{productName}</Text>
-            <Text className="text-white font-lato text-3xl">
-              ${Math.round(currentProductPrice * quantity, 2)}
-            </Text>
-          </View>
-
-          <View className="flex flex-row items-center space-x-4">
-            <TouchableOpacity
-              disabled={quantity <= 1}
-              className="w-12 h-8 bg-neutral-400 rounded-lg"
-              onPress={decreaseQuantity}
-            >
-              <Text className="text-white mx-auto text-2xl">-</Text>
-            </TouchableOpacity>
-            <Text className="text-white font-lato">{quantity}</Text>
-            <TouchableOpacity
-              className="w-12 h-8 bg-bgred rounded-lg"
-              onPress={increaseQuantity}
-            >
-              <Text className="text-white mx-auto text-xl">+</Text>
-            </TouchableOpacity>
-          </View>
+          <Text className="text-white text-3xl font-lato">{productName}</Text>
+          <Text className="text-white font-lato text-3xl">${price}</Text>
         </View>
 
-        <Text className="text-white mt-8">
-          This product has a minimum order units of {minimumOrder}
+        <Text className="text-white mt-4">
+          Group purchase for this product has a minimum order units of{" "}
+          {minimumOrder}
         </Text>
 
-        <Button
-          className="text-white bg-bgred mt-4 rounded-lg"
-          mode="contained"
+        <View className="mt-16">
+          <Text className="text-white font-lato text-2xl">Your group</Text>
+        </View>
+        <TouchableOpacity
+          className="items-center flex flex-row space-x-2 my-4"
           onPress={toggleModal}
         >
-          Invite Friends
-        </Button>
+          <PlusCircle className="text-bgred" size={24} />
+          <Text className="text-white text-lg pb-1">Invite friends</Text>
+        </TouchableOpacity>
 
-        <Text className="text-white font-lato text-2xl mt-16">Group:</Text>
-
-        <View className="flex flex-initial">
-          <View style={{ marginBottom: 10 }}>
-            {currentGroup.map((item, index) => (
-              <View key={index}>
-                <View className="flex flex-row justify-between my-4 border-b-2 border-white ">
-                  <Text className="text-white text-lg">{item.first_name}</Text>
-                  <Text className="text-white text-lg">{item.details}</Text>
-                  <Text className="text-white text-lg">
-                    Quantity: {item.quantity}
-                  </Text>
-                  <Text className="text-white text-lg">
-                    Subtotal: $
-                    {Math.round(item.quantity * currentProductPrice, 2)}
-                  </Text>
+        <View className="mb-2.5">
+          {currentGroup.map((item, index) => (
+            <View key={index}>
+              <View className="flex flex-row justify-between my-4 ">
+                <Text className="text-white text-lg">{item.first_name}</Text>
+                <Text className="text-white text-lg">{item.details}</Text>
+                <View className="flex flex-row items-center space-x-4">
+                  <TouchableOpacity
+                    disabled={quantity <= 1}
+                    className="w-10 h-8 bg-neutral-400 rounded-lg"
+                    onPress={decreaseQuantity}
+                  >
+                    <Text className="text-white mx-auto text-2xl">-</Text>
+                  </TouchableOpacity>
+                  <Text className="text-white font-lato">{item.quantity}</Text>
+                  <TouchableOpacity
+                    className="w-10 h-8 bg-bgred rounded-lg"
+                    onPress={increaseQuantity}
+                  >
+                    <Text className="text-white mx-auto text-xl">+</Text>
+                  </TouchableOpacity>
                 </View>
+                <Text className="text-white text-lg">
+                  ${Math.round(item.quantity * currentProductPrice, 2)}
+                </Text>
               </View>
-            ))}
-          </View>
+            </View>
+          ))}
         </View>
 
-        <Text className="text-white">
+        <View className="w-full h-0.5 bg-white"></View>
+        <Text className="text-white mt-4">
           Rewards: {"\n"}
           Invite one new user for an additional 10% discount! {"\n"}
           Spend over $100 for an additional 5% discount!
         </Text>
 
-        <View className="flex flex-row justify-between space-x-4">
-          <Button
-            className="text-white bg-gray-400 mt-4 rounded-lg px-6"
-            mode="contained"
-          >
-            Delete
-          </Button>
-
+        <View className="flex flex-row justify-end space-x-4">
           {quantity >= minimumOrder && (
             <Button
-              className="text-white bg-bgred mt-4 rounded-lg"
+              className="text-white bg-bgred mt-8 rounded-lg"
               mode="contained"
               onPress={handleSubmit}
             >
@@ -238,29 +198,32 @@ export default function GroupBuyPage() {
           onDismiss={toggleModal}
           dismissable={false}
         >
-          <View className="bg-neutral-600 rounded-lg mb-2">
+          <View className="bg-neutral-600 rounded-lg mt-32">
             <View className="m-4 ">
               <View className="flex flex-row justify-between">
                 <Text className="font-bold font-lato text-2xl text-white">
-                      Invite Your Friends!
+                  Invite Your Friends!
                 </Text>
-                
+
                 <TouchableOpacity
-                className="w-6 self-end mb-1"
-                mode="contained"
-                onPress={toggleModal}
-              >
-                <X size={22} color="white" className="self-center"/>
-              </TouchableOpacity>
+                  className="w-6 self-end mb-1"
+                  mode="contained"
+                  onPress={toggleModal}
+                >
+                  <X size={22} color="white" className="self-center" />
+                </TouchableOpacity>
               </View>
-              
+
               <Text className="text-white text-lg font-lato mb-4 mt-4">
                 {" "}
                 Suggested Accounts:
               </Text>
-              <View className="justify-between space-y-4">
+              <View className="justify-between space-y-2">
                 {accounts.map((item) => (
-                  <View key={item.first_name} className="flex flex-row justify-between mb-3 items-center">
+                  <View
+                    key={item.first_name}
+                    className="flex flex-row justify-between mb-3 items-center"
+                  >
                     <Text className="text-white font-lato">
                       {" "}
                       {item.first_name}
@@ -271,10 +234,9 @@ export default function GroupBuyPage() {
                     </Text>
 
                     <TouchableOpacity
-                      
-                      className="w-28 bg-bgred rounded-lg h-7 mt-1"
+                      className="w-24 bg-bgred rounded-lg h-7 mt-1"
                       onPress={() => {
-                        item.details = "Invited";
+                        // item.details = "Invited";
                         item.quantity = 0;
                         if (currentGroup.indexOf(item) === -1) {
                           currentGroup.push(item);
@@ -283,7 +245,9 @@ export default function GroupBuyPage() {
                         setModalVisible(!isModalVisible);
                       }}
                     >
-                      <Text className="self-center my-auto text-white font-lato">Invite</Text>
+                      <Text className="self-center my-auto text-white font-lato">
+                        Invite
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 ))}
@@ -292,6 +256,6 @@ export default function GroupBuyPage() {
           </View>
         </Modal>
       </View>
-    </View>
+    </ScrollView>
   );
 }

@@ -140,7 +140,7 @@ export default function ProductList() {
                   </Text>
                 </View>
                 <View className="flex flex-row justify-between sm:mt-0.5">
-                  <Text className="text-slate-100 text-[12px] font-regencie pl-3">
+                  <Text className="text-slate-100 text-[12px] pl-3">
                     {product.shopName}
                   </Text>
                 </View>

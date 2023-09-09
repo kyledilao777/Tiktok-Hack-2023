@@ -16,17 +16,19 @@ export default function GroupBuyPage() {
   const { productName, price } = router.params;
   const [quantity, setQuantity] = useState(1);
   const [currentProductPrice, setOutputValue] = useState(price);
+  const [totalProductPrice, setTotalValue] = useState(0);
   const [currentGroup, setCurrentGroup] = useState([
     {
       first_name: "You",
       // details: "Owner",
-      quantity: quantity,
+      quantity: 0,
       new_user: false,
     },
   ]);
   const [accounts, setUsers] = useState([]);
   const [discounts, setDiscounts] = useState([]);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [newUserPresent, setNewUserPresent]= useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -80,32 +82,35 @@ export default function GroupBuyPage() {
   }, [quantity]);
 
   useEffect(() => {
-    const setNewUserDiscount = async () => {
-      if (newUserPresent) {
-        setOutputValue(currentProductPrice * newUserDiscount);
-      } else {
-        setOutputValue(currentProductPrice);
-      }
-    };
+    const setTotalPrice = async () => {
+      const newCurrentGroup = currentGroup.map((item) => item.quantity);
+      const sum = newCurrentGroup.reduce((quanta, quantb) => quanta + quantb, 0);
+      setTotalValue(sum*price);
+    }
 
-    setNewUserDiscount();
+    setTotalPrice();
+  }, [quantity, totalProductPrice]);
+
+  useEffect(() => {
+    setNewUserPresent(currentGroup.some((item) => item.new_user === true));
+    setOutputValue((prevPrice) => newUserPresent ? prevPrice * newUserDiscount : prevPrice);
   }, [newUserPresent]);
 
   const decreaseQuantity = (i) => {
     setQuantity(quantity - 1);
-    currentGroup[i].quantity = quantity + 1;
+    currentGroup[i].quantity = currentGroup[i].quantity - 1;
   };
 
   const increaseQuantity = (i) => {
     setQuantity(quantity + 1);
-    currentGroup[i].quantity = quantity + 1;
+    currentGroup[i].quantity = currentGroup[i].quantity + 1;
   };
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
-  const newUserPresent = currentGroup.some((item) => item.new_user === true);
+  
   // const isInvited = async (user) =>
   //   currentGroup.some((item) => item.first_name === user.first_name);
 
@@ -154,14 +159,14 @@ export default function GroupBuyPage() {
                   <TouchableOpacity
                     disabled={item.quantity <= 1}
                     className="w-10 h-8 bg-neutral-400 rounded-lg"
-                    onPress={decreaseQuantity(index)}
+                    onPress={() => decreaseQuantity(index)}
                   >
                     <Text className="text-white mx-auto text-2xl">-</Text>
                   </TouchableOpacity>
                   <Text className="text-white font-lato">{item.quantity}</Text>
                   <TouchableOpacity
                     className="w-10 h-8 bg-bgred rounded-lg"
-                    onPress={increaseQuantity(index)}
+                    onPress={() => increaseQuantity(index)}
                   >
                     <Text className="text-white mx-auto text-xl">+</Text>
                   </TouchableOpacity>
@@ -175,6 +180,11 @@ export default function GroupBuyPage() {
         </View>
 
         <View className="w-full h-0.5 bg-white"></View>
+
+        <Text className="text-white mt-4">
+          {totalProductPrice} 
+        </Text>
+
         <Text className="text-white mt-4">
           Rewards: {"\n"}
           Invite one new user for an additional 10% discount! {"\n"}

@@ -17,7 +17,7 @@ export default function HomeScreen() {
   const [contacts, setContacts] = useState([]);
   const [buyers, setBuyers] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const { productName } = useSearchParams();
+  const { productName, price } = useSearchParams();
   const router = useRouter();
   const navigation = useNavigation();
 
@@ -83,7 +83,11 @@ export default function HomeScreen() {
         onPress={() =>
           router.push({
             pathname: "group-purchase",
-            params: { productName: productName, friendName: title.firstName },
+            params: { productName: productName, friendName: title.firstName, price:price, preAddedGroup: {
+              first_name: title.firstName,
+              quantity: 0,
+              new_user: false,
+            }},
           })
         }
       >
@@ -131,11 +135,12 @@ export default function HomeScreen() {
                       params: {
                         productName: productName,
                         friendName: contact.firstName,
+                        price:price,
                       },
                     })
                   }
                 >
-                  <Text className="font-lato"> Payment </Text>
+                  <Text className="font-lato"> Group Purchase</Text>
                 </TouchableOpacity>
               </View>
             </View>

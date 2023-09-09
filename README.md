@@ -30,6 +30,11 @@ After finding someone to purchase a product together, they will be directed to t
 
 Additionally, if a new user is added into the group purchase, a new user discount can be applied. This encourages existing users to invite more friends to join the Tiktok/Tiktok Shop platform. The merchant can also choose to set a minimum order value. Users have to meet this value in order to make a purchase.
 
+Extension:
+- A unique link can be generated for each group order so that it can be easily shared with new users without the app. They will be able to view the cart, product and prices. Similar to how unregisted users can watch tiktok on web browser.
+- Other form of discounts can also be used to gamify the experience. For instance, there can be a counter for the number of new user invite. The amount of discount given will scale with the number of new users invited.
+
+
 **<ins>2.  Find Friends (Existing and New Users)</ins>**  
 Find a friend to purchase those latest Converse kicks with. Our newest feature, "Find Friends", helps Tiktok users find other users, saved on their device as a contact, who have also  added the item to their cart. Now, like-minded Converse fans can purchase the new sneakers together and grab all those crazy discounts along the way. 
 

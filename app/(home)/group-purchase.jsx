@@ -5,6 +5,7 @@ import { View, FlatList, ScrollView, TouchableOpacity } from "react-native";
 import { Link, useSearchParams, useRouter} from "expo-router";
 import { Text, Button, Modal } from "react-native-paper";
 import { useAuth } from "../../contexts/auth";
+import { X } from "lucide-react-native";
 
 export default function GroupBuyPage() {
   const minimumOrder = 50;
@@ -27,6 +28,7 @@ export default function GroupBuyPage() {
   const [discounts, setDiscounts] = useState([]);
   const [isModalVisible, setModalVisible] = useState(false);
   const { user } = useAuth();
+  
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -235,107 +237,57 @@ export default function GroupBuyPage() {
           visible={isModalVisible}
           onDismiss={toggleModal}
           dismissable={false}
-          style={{ alignItems: "left", marginLeft: 20 }}
         >
-          <View
-            style={{
-              backgroundColor: "white",
-              paddingTop: 10,
-              paddingBottom: 10,
-              paddingLeft: 10,
-              paddingRight: 10,
-              borderRadius: 10,
-              borderWidth: 1,
-              borderColor: "gray",
-              width: "100%",
-            }}
-          >
-            <Button
-              style={[
-                styles.button,
-                {
-                  width: 100,
-                  height: 40,
-                  borderRadius: 10,
-                  marginTop: 10,
-                  marginLeft: 5,
-                },
-              ]}
-              mode="contained"
-              labelStyle={styles.buttonText}
-              onPress={toggleModal}
-            >
-              Close
-            </Button>
+          <View className="bg-neutral-600 rounded-lg mb-2">
+            <View className="m-4 ">
+              <View className="flex flex-row justify-between">
+                <Text className="font-bold font-lato text-2xl text-white">
+                      Invite Your Friends!
+                </Text>
+                
+                <TouchableOpacity
+                className="bg-bgred w-6 rounded-full self-end mb-1"
+                mode="contained"
+                onPress={toggleModal}
+              >
+                <X size={22} color="white" className="self-center"/>
+              </TouchableOpacity>
+              </View>
+              
+              <Text className="text-white text-lg font-lato mb-4 mt-4">
+                {" "}
+                Suggested Accounts:
+              </Text>
+              <View className="justify-between">
+                {accounts.map((item) => (
+                  <View key={item.first_name} className="flex flex-row justify-between mb-3">
+                    <Text className="text-white font-lato">
+                      {" "}
+                      {item.first_name}
+                    </Text>
+                    <Text className="text-white font-lato">
+                      {" "}
+                      {item.connection_type}
+                    </Text>
 
-            <Text
-              style={[
-                styles.label,
-                {
-                  marginTop: 20,
-                  marginBottom: 10,
-                  marginLeft: 5,
-                  fontWeight: "bold",
-                  fontSize: 30,
-                },
-              ]}
-            >
-              Invite Friends
-            </Text>
-            <Text style={[styles.label, { marginBottom: 10, marginLeft: 5 }]}>
-              {" "}
-              Suggested Accounts:
-            </Text>
-            <View>
-              {accounts.map((item) => (
-                <View key={item.first_name}>
-                  <Text
-                    style={[
-                      styles.label,
-                      { marginBottom: 0, marginLeft: 70, marginTop: -45 },
-                    ]}
-                  >
-                    {" "}
-                    {item.first_name}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.label,
-                      { marginBottom: 0, marginLeft: 70, marginTop: 0 },
-                    ]}
-                  >
-                    {" "}
-                    {item.connection_type}
-                  </Text>
-
-                  <Button
-                    style={[
-                      styles.button,
-                      {
-                        width: 100,
-                        height: 40,
-                        borderRadius: 10,
-                        marginBottom: 20,
-                        marginTop: -35,
-                        marginLeft: 265,
-                      },
-                    ]}
-                    mode="contained"
-                    labelStyle={styles.buttonText}
-                    onPress={() => {
-                      item.details = "Invited";
-                      item.quantity = 0;
-                      if (currentGroup.indexOf(item) === -1) {
-                        currentGroup.push(item);
-                        console.log(currentGroup);
-                      }
-                      setModalVisible(!isModalVisible);
-                    }}
-                  >
-                    Invite
-                  </Button>
-                </View>
-              ))}
+                    <TouchableOpacity
+                      
+                      className="w-28 bg-bgred rounded-lg h-7"
+                      onPress={() => {
+                        item.details = "Invited";
+                        item.quantity = 0;
+                        if (currentGroup.indexOf(item) === -1) {
+                          currentGroup.push(item);
+                          console.log(currentGroup);
+                        }
+                        setModalVisible(!isModalVisible);
+                      }}
+                    >
+                      <Text className="self-center my-auto text-white font-lato">Invite</Text>
+                    </TouchableOpacity>
+                  </View>
+                ))}
+              </View>
             </View>
           </View>
         </Modal>

@@ -246,7 +246,7 @@ export default function GroupBuyPage() {
                 </Text>
                 
                 <TouchableOpacity
-                className="bg-bgred w-6 rounded-full self-end mb-1"
+                className="w-6 self-end mb-1"
                 mode="contained"
                 onPress={toggleModal}
               >

@@ -22,7 +22,8 @@ export default function ProductList() {
     const { data: existingProducts, error } = await supabase
       .from("products")
       .select("id, name, quantity")
-      .eq("name", productName);
+      .eq("name", productName)
+      .eq("buyer", user.user_metadata.phone_number);
 
     if (error) {
       console.error("Error while fetching products:", error);
@@ -42,7 +43,6 @@ export default function ProductList() {
         console.error("Error while updating quantity:", updateError);
       }
     } else {
-      // manually insert data in the database here for DEMO
       const { error: insertError } = await supabase.from("products").insert({
         name: productName,
         buyer: user.user_metadata.phone_number,

@@ -29,7 +29,6 @@ export default function GroupBuyPage() {
   const [newUserPresent, setNewUserPresent] = useState(false);
   const { user } = useAuth();
 
-  console.log(friendName)
   //the merchant should set this discount quantity threshold. For our prototype, we will put it as 60.
   const discountQuantityThreshold = 15;
 
@@ -70,18 +69,6 @@ export default function GroupBuyPage() {
 
     fetchDiscounts();
   }, []);
-
-  /*useEffect(() => {
-    const setDiscounted = async () => {
-      if (quantity === 50) {
-        setOutputValue(currentProductPrice * groupOrderDiscount);
-      } else {
-        setOutputValue(currentProductPrice);
-      }
-    };
-
-    setDiscounted();
-  }, [quantity]);*/
 
   useEffect(() => {
     const setTotalPrice = async () => {
@@ -136,9 +123,6 @@ export default function GroupBuyPage() {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-
-  // const isInvited = async (user) =>
-  //   currentGroup.some((item) => item.first_name === user.first_name);
 
   const handleSubmit = async () => {
     const { error } = await supabase.from("products").insert({
@@ -283,7 +267,6 @@ export default function GroupBuyPage() {
                         setQuantity(quantity + 1);
                         if (currentGroup.indexOf(item) === -1) {
                           currentGroup.push(item);
-                          console.log(currentGroup);
                         }
                         setModalVisible(!isModalVisible);
                       }}

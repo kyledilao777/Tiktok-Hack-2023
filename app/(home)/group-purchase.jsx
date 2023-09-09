@@ -8,28 +8,30 @@ import { useAuth } from "../../contexts/auth";
 import { X, PlusCircle } from "lucide-react-native";
 
 export default function GroupBuyPage() {
-  const minimumOrder = 50;
+  const minimumOrder = 10;
   const newUserDiscount = 0.9;
   const groupOrderDiscount = 0.95;
   const router = useRoute();
-
-  const { productName, price } = router.params;
+  const route = useRouter();
+  const { productName, price, friendName } = router.params;
   const [quantity, setQuantity] = useState(1);
   const [currentProductPrice, setOutputValue] = useState(price);
   const [totalProductPrice, setTotalValue] = useState(0);
-  const [currentGroup, setCurrentGroup] = useState([
-    {
-      first_name: "You",
-      // details: "Owner",
-      quantity: 0,
-      new_user: false,
-    },
-  ]);
+  const [totalDiscountMultiplier, setDiscountValue] = useState(1);
+  const [currentGroup, setCurrentGroup] = useState(() => {
+    const owner = { first_name: "You", quantity: 1, new_user: false};
+    const friend = { first_name: friendName, quantity: 0, new_user: true};
+    return (friendName != null ? [owner, friend] : [owner]);
+  });
   const [accounts, setUsers] = useState([]);
   const [discounts, setDiscounts] = useState([]);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [newUserPresent, setNewUserPresent]= useState(false);
+  const [newUserPresent, setNewUserPresent] = useState(false);
   const { user } = useAuth();
+
+  console.log(friendName)
+  //the merchant should set this discount quantity threshold. For our prototype, we will put it as 60.
+  const discountQuantityThreshold = 15;
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -69,7 +71,7 @@ export default function GroupBuyPage() {
     fetchDiscounts();
   }, []);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const setDiscounted = async () => {
       if (quantity === 50) {
         setOutputValue(currentProductPrice * groupOrderDiscount);
@@ -79,21 +81,46 @@ export default function GroupBuyPage() {
     };
 
     setDiscounted();
-  }, [quantity]);
+  }, [quantity]);*/
 
   useEffect(() => {
     const setTotalPrice = async () => {
       const newCurrentGroup = currentGroup.map((item) => item.quantity);
-      const sum = newCurrentGroup.reduce((quanta, quantb) => quanta + quantb, 0);
-      setTotalValue(sum*price);
-    }
+      const sum = newCurrentGroup.reduce(
+        (quanta, quantb) => quanta + quantb,
+        0
+      );
+      setTotalValue(sum * price * totalDiscountMultiplier);
+    };
 
     setTotalPrice();
-  }, [quantity, totalProductPrice]);
+  }, [quantity, totalProductPrice, totalDiscountMultiplier]);
+
+  useEffect(() => {
+    const setDiscountedPrice = async () => {
+      const newCurrentGroup = currentGroup.map((item) => item.quantity);
+      const sum = newCurrentGroup.reduce(
+        (quanta, quantb) => quanta + quantb,
+        0
+      );
+      let multiplier = 1;
+      if (sum > discountQuantityThreshold) {
+        multiplier = multiplier * groupOrderDiscount;
+      }
+      if (newUserPresent) {
+        multiplier = multiplier * newUserDiscount;
+      }
+      setDiscountValue(multiplier);
+    };
+
+    setDiscountedPrice();
+  }, [quantity, totalDiscountMultiplier]);
 
   useEffect(() => {
     setNewUserPresent(currentGroup.some((item) => item.new_user === true));
-    setOutputValue((prevPrice) => newUserPresent ? prevPrice * newUserDiscount : prevPrice);
+    setOutputValue((prevPrice) =>
+      newUserPresent ? prevPrice * newUserDiscount : prevPrice
+    );
   }, [newUserPresent]);
 
   const decreaseQuantity = (i) => {
@@ -110,7 +137,6 @@ export default function GroupBuyPage() {
     setModalVisible(!isModalVisible);
   };
 
-  
   // const isInvited = async (user) =>
   //   currentGroup.some((item) => item.first_name === user.first_name);
 
@@ -152,43 +178,49 @@ export default function GroupBuyPage() {
         <View className="mb-2.5">
           {currentGroup.map((item, index) => (
             <View key={index}>
-              <View className="flex flex-row justify-between my-4 ">
+              <View className="flex flex-row my-4">
                 <Text className="text-white text-lg">{item.first_name}</Text>
-                <Text className="text-white text-lg">{item.details}</Text>
-                <View className="flex flex-row items-center space-x-4">
-                  <TouchableOpacity
-                    disabled={item.quantity <= 1}
-                    className="w-10 h-8 bg-neutral-400 rounded-lg"
-                    onPress={() => decreaseQuantity(index)}
-                  >
-                    <Text className="text-white mx-auto text-2xl">-</Text>
-                  </TouchableOpacity>
-                  <Text className="text-white font-lato">{item.quantity}</Text>
-                  <TouchableOpacity
-                    className="w-10 h-8 bg-bgred rounded-lg"
-                    onPress={() => increaseQuantity(index)}
-                  >
-                    <Text className="text-white mx-auto text-xl">+</Text>
-                  </TouchableOpacity>
+                <View className="flex flex-row ml-auto">
+                  <View className="flex flex-row items-center space-x-4">
+                    <TouchableOpacity
+                      disabled={item.quantity <= 1}
+                      className="w-10 h-8 bg-neutral-400 rounded-lg"
+                      onPress={() => decreaseQuantity(index)}
+                    >
+                      <Text className="text-white mx-auto text-2xl">-</Text>
+                    </TouchableOpacity>
+                    <Text className="text-white font-lato">
+                      {item.quantity}
+                    </Text>
+                    <TouchableOpacity
+                      className="w-10 h-8 bg-bgred rounded-lg mr-20"
+                      onPress={() => increaseQuantity(index)}
+                    >
+                      <Text className="text-white mx-auto text-xl">+</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <Text className="text-white text-lg ml-auto">
+                    ${Math.round(item.quantity * price, 2)}
+                  </Text>
                 </View>
-                <Text className="text-white text-lg">
-                  ${Math.round(item.quantity * currentProductPrice, 2)}
-                </Text>
               </View>
             </View>
           ))}
         </View>
 
+        <View className="flex flex-row justify-between">
+          <Text className="text-white font-lato text-3xl self-end mb-2">
+            Total
+          </Text>
+          <Text className="text-white font-lato text-3xl self-end mb-2">
+            ${Math.round(totalProductPrice,2)}
+          </Text>
+        </View>
         <View className="w-full h-0.5 bg-white"></View>
-
-        <Text className="text-white mt-4">
-          {totalProductPrice} 
-        </Text>
-
         <Text className="text-white mt-4">
           Rewards: {"\n"}
           Invite one new user for an additional 10% discount! {"\n"}
-          Spend over $100 for an additional 5% discount!
+          Purchase over {discountQuantityThreshold} units for an additional 5% discount!
         </Text>
 
         <View className="flex flex-row justify-end space-x-4">
@@ -247,7 +279,8 @@ export default function GroupBuyPage() {
                       className="w-24 bg-bgred rounded-lg h-7 mt-1"
                       onPress={() => {
                         // item.details = "Invited";
-                        item.quantity = 0;
+                        item.quantity = 1;
+                        setQuantity(quantity + 1);
                         if (currentGroup.indexOf(item) === -1) {
                           currentGroup.push(item);
                           console.log(currentGroup);

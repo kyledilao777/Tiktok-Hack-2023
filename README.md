@@ -72,6 +72,12 @@ Don't forget to drop them a message and create a group purchase for your latest 
 
 2. Group Purchase Buy
 
+After finding someone to purchase a product together, you will be directed to the group buy page. Alternatively, you can also start a group buy and invite other users as well. 
 
+You can invite users that are suggested by Tiktok, or share the group buy cart with your friend via the sharing link.
 
+After reaching a certain number of units purchased, you will be rewarded with additional discounts. This will encourage users to share the group purchase with more people.
 
+Additionally, by having a new user in your group purchase, another new user discount will be applied. This incentivises existing users to invite more friends to join the Tiktok/Tiktok Shop platform.
+
+The merchant can also choose to set a minimum order value. Users have to meet this value in order to make a purchase.

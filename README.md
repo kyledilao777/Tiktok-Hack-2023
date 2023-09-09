@@ -62,4 +62,4 @@ To run the Prototype, follow these instructions:
 
 6. **Run on IOS Simulator**
     - After starting the app, you can run it on an iOS simulator by pressing the i key.
-    - Make sure you have Expo Go installed on your laptop to run the app on the simulator.
+    - Make sure you have Expo Go installed on your laptop to run the app on an **iPhone 14 Pro Max** simulator.

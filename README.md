@@ -40,10 +40,9 @@ Find a friend to purchase those latest Converse kicks with. Our newest feature, 
 
 As a social feature, Find Friends adds a social element to online shopping by encouragubg users to connect with friends reconnect with old friends as they talk to one another and discuss how they can make a purchase together. 
 
-Limitations:  
-- Ideally, users should be lead to group purchase page after they are connected through an in-page button. 
-- Currently, our Prototype only allows users to view contacts who have the same item in their cart. There is a need for manual communication with one another to start a Group Purchase. 
-
+Extension:
+- A button to send a link to invite new users onto TikTok and shop for the same item can be created as expanded functionality of "Find Friends".
+  
 ## Running the Prototype
 To run the Prototype, follow these instructions:
 

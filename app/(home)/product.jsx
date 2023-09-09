@@ -80,7 +80,7 @@ export default function ProductList() {
         </TouchableOpacity>
         <TouchableOpacity
           className="items-center my-2"
-          onPress={() => navigation.navigate("friend-list", { productName })}
+          onPress={() => navigation.navigate("friend-list", { productName, price })}
         >
           <Users color="white" size={24} />
           <Text className="text-white font-calibri align-middle justify-center pl-1 mt-2">

@@ -91,14 +91,14 @@ export default function GroupBuyPage() {
     setNewUserDiscount();
   }, [newUserPresent]);
 
-  const decreaseQuantity = () => {
+  const decreaseQuantity = (i) => {
     setQuantity(quantity - 1);
-    currentGroup[0].quantity = quantity + 1;
+    currentGroup[i].quantity = quantity + 1;
   };
 
-  const increaseQuantity = () => {
+  const increaseQuantity = (i) => {
     setQuantity(quantity + 1);
-    currentGroup[0].quantity = quantity + 1;
+    currentGroup[i].quantity = quantity + 1;
   };
 
   const toggleModal = () => {
@@ -152,16 +152,16 @@ export default function GroupBuyPage() {
                 <Text className="text-white text-lg">{item.details}</Text>
                 <View className="flex flex-row items-center space-x-4">
                   <TouchableOpacity
-                    disabled={quantity <= 1}
+                    disabled={item.quantity <= 1}
                     className="w-10 h-8 bg-neutral-400 rounded-lg"
-                    onPress={decreaseQuantity}
+                    onPress={decreaseQuantity(index)}
                   >
                     <Text className="text-white mx-auto text-2xl">-</Text>
                   </TouchableOpacity>
                   <Text className="text-white font-lato">{item.quantity}</Text>
                   <TouchableOpacity
                     className="w-10 h-8 bg-bgred rounded-lg"
-                    onPress={increaseQuantity}
+                    onPress={increaseQuantity(index)}
                   >
                     <Text className="text-white mx-auto text-xl">+</Text>
                   </TouchableOpacity>

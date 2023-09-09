@@ -258,9 +258,9 @@ export default function GroupBuyPage() {
                 {" "}
                 Suggested Accounts:
               </Text>
-              <View className="justify-between">
+              <View className="justify-between space-y-4">
                 {accounts.map((item) => (
-                  <View key={item.first_name} className="flex flex-row justify-between mb-3">
+                  <View key={item.first_name} className="flex flex-row justify-between mb-3 items-center">
                     <Text className="text-white font-lato">
                       {" "}
                       {item.first_name}
@@ -272,7 +272,7 @@ export default function GroupBuyPage() {
 
                     <TouchableOpacity
                       
-                      className="w-28 bg-bgred rounded-lg h-7"
+                      className="w-28 bg-bgred rounded-lg h-7 mt-1"
                       onPress={() => {
                         item.details = "Invited";
                         item.quantity = 0;
@@ -295,27 +295,3 @@ export default function GroupBuyPage() {
     </View>
   );
 }
-
-const styles = {
-  photoText: {
-    fontSize: 16,
-    color: "gray",
-  },
-  label: {
-    textAlign: "left",
-    alignItems: "center",
-    marginLeft: 20,
-    fontSize: 16,
-  },
-  button: {
-    width: 80,
-    height: 40,
-    borderRadius: 10,
-    backgroundColor: "#EE1D52",
-    marginTop: -20,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-};

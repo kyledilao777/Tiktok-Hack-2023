@@ -4,277 +4,151 @@ import {
   Alert,
   Image,
   View,
+  SafeAreaView,
   ScrollView,
-  FlatList,
 } from "react-native";
-import { useState, useEffect } from "react";
-import { supabase } from "../../lib/supabase";
+import { useState } from "react";
 import { TextInput } from "react-native-paper";
 import { useRouter } from "expo-router";
+import { useNavigation } from "expo-router";
 import { useAuth } from "../../contexts/auth";
-import { useNavigation } from "@react-navigation/native";
-import {
-  LogOut,
-  ShoppingCart,
-  Users,
-  ShoppingBasket,
-} from "lucide-react-native";
+import { Search } from "lucide-react-native";
 
 export default function ProductList() {
   const router = useRouter();
   const navigation = useNavigation();
   const { user } = useAuth();
-  const [search, setSearch] = useState("");
-  const [productName, setProductName] = useState("Hand Wash");
-  const [products, setProducts] = useState([
-    { productName: "evan", price: 15 },
-    { shopName: "ucok", productName: "banana", price: 23 },
-  ]);
+  const products = [
+    {
+      shopName: "Converse",
+      productName: "Shoe",
+      price: 15,
+      uri: require("../../assets/shoes.jpeg"),
+    },
+    {
+      shopName: "H&M",
+      productName: "T-Shirt",
+      price: 23,
+      uri: require("../../assets/tshirt.jpeg"),
+    },
+    {
+      shopName: "Zara",
+      productName: "Jacket",
+      price: 150,
+      uri: require("../../assets/jacket.jpeg"),
+    },
+    {
+      shopName: "Phatek Philippe",
+      productName: "Watch",
+      price: 4000,
+      uri: require("../../assets/watch.jpeg"),
+    },
+    {
+      shopName: "Apple",
+      productName: "Airpods",
+      price: 300,
+      uri: require("../../assets/airpods.jpeg"),
+    },
+    {
+      shopName: "Apple",
+      productName: "M2 14-inch",
+      price: 300,
+      uri: require("../../assets/m2.jpeg"),
+    },
+    {
+      shopName: "Apple",
+      productName: "Casing",
+      price: 10,
+      uri: require("../../assets/casing.jpeg"),
+    },
+    {
+      shopName: "Apple",
+      productName: "iPad",
+      price: 1500,
+      uri: require("../../assets/ipad.jpeg"),
+    },
+    {
+      shopName: "Logitech",
+      productName: "Mouse",
+      price: 40,
+      uri: require("../../assets/mouse.jpeg"),
+    },
+    {
+      shopName: "Samsung",
+      productName: "Monitor",
+      price: 200,
+      uri: require("../../assets/monitor.jpeg"),
+    },
+  ];
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState(null);
 
-  const handleSubmit = async () => {
-    const { data: existingProducts, error } = await supabase
-      .from("products")
-      .select("id, name, quantity")
-      .eq("name", productName);
-
-    if (error) {
-      console.error("Error while fetching products:", error);
-      return;
-    }
-
-    if (existingProducts && existingProducts.length > 0) {
-      const existingProduct = existingProducts[0];
-      const newQuantity = existingProduct.quantity + 1;
-
-      const { error: updateError } = await supabase
-        .from("products")
-        .update({ quantity: newQuantity })
-        .eq("id", existingProduct.id);
-
-      if (updateError) {
-        console.error("Error while updating quantity:", updateError);
-      }
-    } else {
-      // manually insert data in the database here for DEMO
-      const { error: insertError } = await supabase.from("products").insert({
-        name: productName,
-        buyer: user.user_metadata.phone_number,
-        quantity: 1,
-        price: 8,
-        group: false,
-      });
-
-      if (insertError) {
-        console.error("Error while inserting product:", insertError);
-      }
-    }
-
-    Alert.alert("Added to Cart!", "", [{ text: "Ok" }]);
+  const handleNavigation = (productName, uri, price) => {
+    navigation.navigate("product", { productName, uri, price });
   };
 
-  const handleCart = async () => {
-    router.push("Checkout/indivcart");
-  };
+  const displayedProducts = filteredProducts || products;
 
-  const handleSearch = () => {
-    products.filter((product) =>
-      product.productName.includes(search.toLowerCase())
-    );
-  };
+  const filteredDisplayProducts = displayedProducts.filter((product) =>
+    product.productName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <ScrollView className="align-middle flex-1 bg-black/80">
-      <View className="h-16 bg-bgred">
-        <View className="flex flex-row mt-1 justify-between mx-4">
-          <TouchableOpacity className="mt-6" onPress={handleCart}>
-            <ShoppingCart color="white" size={22} />
-          </TouchableOpacity>
-          <Image
-            className="w-24 h-7 mt-5"
-            source={require("../../assets/whitetiktok.png")}
-          />
-          <TouchableOpacity
-            className="mt-6"
-            onPress={async () => {
-              await supabase.auth.signOut();
-            }}
-          >
-            <LogOut color="white" size={22} />
-          </TouchableOpacity>
-        </View>
-      </View>
-
+    <SafeAreaView className="flex flex-1 bg-black/80">
       <View className="m-4">
-        <TextInput className="h-12"></TextInput>
-        <View className="flex-row justify-center rounded-b-lg bg-bgblue space-x-12 py-2">
-          <View className="">
-            <TouchableOpacity
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                marginRight: 10,
-                marginTop: 10,
-                borderColor: "#69C9D0",
-                borderWidth: 2,
-                paddingHorizontal: 5,
-                paddingVertical: 2,
-                width: 95,
-              }}
-              onPress={() =>
-                router.push({
-                  pathname: "list",
-                  params: { productName: productName },
-                })
-              }
-            >
-              <Users color="white" size={24} />
-              <Text className="text-white font-calibri align-middle justify-center pl-1 mt-2">
-                {" "}
-                Find Friends{" "}
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          <View>
-            <TouchableOpacity
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                marginRight: 10,
-                marginTop: 10,
-                borderColor: "#69C9D0",
-                borderWidth: 2,
-                paddingHorizontal: 5,
-                paddingVertical: 2,
-                width: 95,
-              }}
-              className="text-white"
-              onPress={handleCart}
-            >
-              <ShoppingBasket color="white" size={24} />
-              <View className="flex-row mt-2">
-                <Text className="text-white font-calibri"> Group </Text>
-                <Text className="text-white font-calibri">Purchase</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+        <View className="flex flex-row items-center bg-slate-50 mx-4 my-2 rounded-lg h-10 mt-4">
+          <Search className="ml-4 text-gray-500" size={20} />
+          <TextInput
+            placeholderTextColor="gray"
+            activeUnderlineColor={"transparent"}
+            selectionColor="#69C9D0"
+            className="h-10 rounded-lg bg-slate-50"
+            placeholder="Search for products..."
+            defaultValue={searchTerm}
+            onChangeText={(newTerm) => setSearchTerm(newTerm)}
+          />
         </View>
-      </View>
 
-      {products.map((product, index) => (
-        <View
-          key={index}
-          className=" flex-wrap grid-rows-3 justify-between m-4"
-        >
-          <TouchableOpacity>
-            <View className="bg-bgblue flex-1 align-middle h-60 w-40 m-2">
-              <Image
-                className="w-[124px] h-[194px] mx-auto"
-                source={require("../../assets/ucok.png")}
-              />
-
-              <View className="flex flex-row mt-1 justify-between">
-                <Text className="text-white font-lato">
-                  {product.productName}
-                </Text>
-                <Text className="text-white font-lato">{product.price}</Text>
-              </View>
-
-              <View className="flex flex-row mt-1 justify-between">
-                <Text className="text-white text-md font-lato">
-                  {product.shopName}
-                </Text>
-                <Text className="text-white font-lato"> Udin</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-      ))}
-
-      <View className="flex-row grid-rows-3 justify-between m-4">
-        <TouchableOpacity>
-          <View className="bg-bgblue flex-1 align-middle h-60 w-40">
-            <Image
-              className="w-[124px] h-[194px] mx-auto"
-              source={require("../../assets/ucok.png")}
-            />
-
-            <View className="flex flex-row mt-1 justify-between">
-              <Text className="text-white font-lato">Price</Text>
-              <Text className="text-white font-lato">$15</Text>
-            </View>
-
-            <View className="flex flex-row mt-1 justify-between">
-              <Text className="text-white text-md font-lato">Owner Name</Text>
-              <Text className="text-white font-lato"> Udin</Text>
-            </View>
+        <ScrollView className="m-4">
+          <View
+            style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", gap: 30 }}
+            className="space-x-0 justify-between"
+          >
+            {filteredDisplayProducts.map((product, index) => (
+              <TouchableOpacity
+                key={index}
+                className="bg-bgred h-56 w-[156px] rounded-lg md:h-64 md:w-[160px] xl:h-[270px] xl:w-[180px] lg:w-[165px]"
+                onPress={() =>
+                  handleNavigation(
+                    product.productName,
+                    product.uri,
+                    product.price
+                  )
+                }
+              >
+                <Image
+                  className="w-[156px] h-[180px] xl:h-[243px] xl:w-[190px] md:w-[160px] lg:w-[165px] lg:h-56 md:h-52 mx-auto rounded-t-lg"
+                  source={product.uri}
+                  l
+                />
+                <View className="flex flex-row mt-1 justify-between px-3 lg:mt-2">
+                  <Text className="text-white font-lato text-[16px]">
+                    {product.productName}
+                  </Text>
+                  <Text className="text-white font-lato text-[16px]">
+                    ${product.price}
+                  </Text>
+                </View>
+                <View className="flex flex-row justify-between sm:mt-0.5">
+                  <Text className="text-slate-100 text-[12px] pl-3">
+                    {product.shopName}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ))}
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View className="bg-bgblue flex-1 align-middle h-60 w-40">
-            <Image
-              className="w-[124px] h-[194px] mx-auto"
-              source={require("../../assets/ucok.png")}
-            />
-
-            <View className="flex flex-row mt-1 justify-between">
-              <Text className="text-white font-lato">Price</Text>
-              <Text className="text-white font-lato">$15</Text>
-            </View>
-
-            <View className="flex flex-row mt-1 justify-between">
-              <Text className="text-white font-lato">Owner Name</Text>
-              <Text className="text-white font-lato"> {productName}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
+        </ScrollView>
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 }
-
-/*
-export default function ProductList() {
-    const router = useRouter();
-    const { user } = useAuth();
-    const [productName, setProductName] = useState("Hand Wash");
-
-    const handleSubmit = async () => {
-        const { error } = await supabase.from('products')
-            .insert({ 
-                name: productName, 
-                buyer: user.user_metadata.phone_number
-            })
-
-        if (error) {
-            console.log(error);
-        }
-
-        Alert.alert(
-            'Added to Cart!',
-            '',
-            [
-                {text: 'Ok'}
-            ]
-        )
-    }
-
-
-    return (
-        <SafeAreaView style={{ flex:1, backgroundColor:'white' }}>
-            <Text style={{ fontSize: 40, fontWeight: "bold", marginTop:10, marginLeft:10, }}> {productName}</Text>
-            <Image style={{ width:200, height:400, marginHorizontal:100, marginTop:50, }} source={require('../../assets/handwash.jpeg')} />
-            <Image style={{ width:"100%", height:20, marginVertical:20}} source={require('../../assets/banner.jpeg')} />
-            <TouchableOpacity style={{ alignSelf:"flex-end", marginRight:20, marginTop:10, borderColor:'black', borderWidth:2, paddingHorizontal:5, paddingVertical:2, width:95, }}
-                onPress={() => router.push({ pathname:'list', params: { productName: productName }})}>
-                <Text> Find friends </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ alignSelf:"flex-end", marginRight:20, marginTop:10, borderColor:'black', borderWidth:2, paddingHorizontal:5, paddingVertical:2, width:95, }} onPress={handleSubmit}>
-                <Text> Add to Cart </Text>
-            </TouchableOpacity> 
-            <Button onPress={async () => {await supabase.auth.signOut()}}> Logout  </Button>
-        </SafeAreaView>
-    )
-} */
-
-//<Image className="w-[200px] h-[400px] mx-auto" source={require('../../assets/ucok.png')} /> <View><Image style={{ width: "100%", height: 20, marginVertical: 20}} source={require('../../assets/banner.jpeg')} /></View>

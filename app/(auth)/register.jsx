@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { View, TouchableOpacity, Image } from "react-native";
-import { Text, TextInput, ActivityIndicator, Button } from "react-native-paper";
+import { Text, TextInput, ActivityIndicator } from "react-native-paper";
 import { useRouter } from "expo-router";
 
 export default function Register() {
@@ -82,7 +82,9 @@ export default function Register() {
             <View className="flex-1 flex-col">
               <Text className="text-white font-lato mb-1">First Name</Text>
               <TextInput
-                className="mb-4 flex-1"
+                className="mb-4 flex-1 bg-slate-50"
+                selectionColor="#69C9D0"
+                activeUnderlineColor={"transparent"}
                 autoCapitalize="none"
                 textContentType="givenName"
                 value={firstName}
@@ -92,7 +94,9 @@ export default function Register() {
             <View className="flex-1 flex-col ml-4">
               <Text className="text-white font-lato mb-1">Last Name</Text>
               <TextInput
-                className="mb-4"
+                className="mb-4 bg-slate-50"
+                selectionColor="#69C9D0"
+                activeUnderlineColor={"transparent"}
                 autoCapitalize="none"
                 textContentType="familyName"
                 value={lastName}
@@ -104,7 +108,9 @@ export default function Register() {
           <View className="text-white font-lato">
             <Text className="text-white font-lato mb-1">Email</Text>
             <TextInput
-              className="mb-4"
+              className="mb-4 bg-slate-50"
+              selectionColor="#69C9D0"
+              activeUnderlineColor={"transparent"}
               autoCapitalize="none"
               textContentType="emailAddress"
               value={email}
@@ -112,7 +118,9 @@ export default function Register() {
             />
             <Text className="text-white font-lato mb-1">Password</Text>
             <TextInput
-              className="mb-4"
+              className="mb-4 bg-slate-50"
+              selectionColor="#69C9D0"
+              activeUnderlineColor={"transparent"}
               secureTextEntry
               autoCapitalize="none"
               textContentType="password"
@@ -121,7 +129,9 @@ export default function Register() {
             />
             <Text className="text-white font-lato mb-1">Phone Number</Text>
             <TextInput
-              className="mb-4"
+              className="mb-4 bg-slate-50"
+              selectionColor="#69C9D0"
+              activeUnderlineColor={"transparent"}
               rautoCapitalize="none"
               textContentType="telephoneNumber"
               value={phoneNumber}
@@ -131,17 +141,18 @@ export default function Register() {
 
           <TouchableOpacity
             onPress={handleSubmit}
-            className="border-white w-full bg-bgred py-2 rounded-lg"
+            className="border-white w-full bg-bgred py-3 rounded-lg"
           >
             {loading ? (
-              <ActivityIndicator className="mx-auto" />
+              <ActivityIndicator className="mx-auto h-4 w-4" />
             ) : (
               <Text className="text-white font-lato mx-auto">Submit</Text>
             )}
           </TouchableOpacity>
 
-          {errMsg !== "" && <Text>{errMsg}</Text>}
-          {loading && <ActivityIndicator />}
+          {errMsg !== "" && (
+            <Text className="mt-2 text-bgred font-lato">{errMsg}!</Text>
+          )}
 
           <View className="flex-row">
             <TouchableOpacity

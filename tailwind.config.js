@@ -3,6 +3,10 @@ module.exports = {
   content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      screens: {
+        md: "390px",
+        lg: "393px",
+      },
       colors: {
         bgred: "#EE1D52",
         bgblue: "#69C9D0",

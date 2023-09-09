@@ -35,11 +35,6 @@ Find a friend to purchase those latest Converse kicks with. Our newest feature, 
 
 As a social feature, Find Friends adds a social element to online shopping by encouragubg users to connect with friends reconnect with old friends as they talk to one another and discuss how they can make a purchase together. 
 
-Illustration:  
-<p align="left">
-<kbd><img width="150" alt="Simulator Screenshot - iPhone 14 Pro - 2023-09-08 at 23 22 08" src=https://github.com/kyledilao777/Tiktok-Hack/assets/108947940/9040b68e-cb3b-4767-8a79-1d417ff3ff8d></kbd> <kbd><img width="150" alt="Simulator Screenshot - iPhone 14 Pro - 2023-09-08 at 23 20 55" src=https://github.com/kyledilao777/Tiktok-Hack/assets/108947940/c4bd4f83-11dc-431e-8eed-c3fa929b9f73></kbd>
-</p>
-
 Limitations:  
 - Ideally, users should be lead to group purchase page after they are connected through an in-page button. 
 - Currently, our Prototype only allows users to view contacts who have the same item in their cart. There is a need for manual communication with one another to start a Group Purchase. 

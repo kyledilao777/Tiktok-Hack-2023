@@ -101,106 +101,91 @@ export default function IndivCheckout() {
     <View className="flex-1 bg-black/80">
       <View className="m-4">
         <ScrollView>
-          <View className="bg-neutral-600 m-4 rounded-lg">
-            <View className="m-2 p-2">
-              <View className="flex flex-row justify-between">
-                <Text className="font-lato text-lg text-white">Product</Text>
-                <Text className="font-lato text-lg text-white">Quantity</Text>
-                <Text className="font-lato text-lg text-white">
-                  Total Price
-                </Text>
-              </View>
-              {ownProducts.map((product, index) => (
-                <View
-                  key={index}
-                  style={styles.product}
-                  className="justify-between"
-                >
-                  <View style={styles.productInfo}>
-                    <Text className="text-white font-lato mt-3">
-                      {product.name}
-                    </Text>
-                  </View>
-                  <View style={styles.groupOrder}>
-                    <Text className="text-white font-lato mt-3">
-                      {product.quantity}
-                    </Text>
-                  </View>
-                  <View style={styles.payment}>
-                    <Text className="text-white font-lato ml-3 mt-3">
-                      ${product.quantity * product.price}
-                    </Text>
+          <View className="ml-4">
+            <Text className="text-white font-calibri text-xl">
+              Individual Order
+            </Text>
+          </View>
+          <View className="m-4 space-y-4">
+            {ownProducts.map((product, index) => (
+              <View
+                key={index}
+                className="justify-between items-center flex flex-row bg-neutral-600 rounded-lg p-4"
+              >
+                <View>
+                  <Text className="text-white font-lato text-lg">
+                    {product.name}
+                  </Text>
+                  <Text className="text-white font-lato mt-4 text-[16px]">
+                    Quantity: {product.quantity}
+                  </Text>
+                </View>
+                <View className="">
+                  <Text className="text-white font-lato self-end text-lg">
+                    ${product.quantity * product.price}
+                  </Text>
+                  <View>
+                    <TouchableOpacity
+                      className="rounded-md w-[90px] h-6 flex-end mt-4"
+                      style={{
+                        alignSelf: "flex-end",
+                        borderColor: "#EE1D52",
+                        backgroundColor: "#EE1D52",
+                      }}
+                      onPress={handleOwnPay}
+                    >
+                      <Text className="text-white font-calibri item-center mx-auto my-auto text-[16px]">
+                        Pay
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
-              ))}
-              <View>
-                <TouchableOpacity
-                  className="rounded-md w-[90px] h-6 flex-end mt-5"
-                  style={{
-                    alignSelf: "flex-end",
-                    borderColor: "#EE1D52",
-                    backgroundColor: "#EE1D52",
-                  }}
-                  onPress={handleOwnPay}
-                >
-                  <Text className="text-white font-calibri item-center mx-auto my-auto">
-                    Pay
-                  </Text>
-                </TouchableOpacity>
               </View>
-            </View>
+            ))}
           </View>
 
-          <View style={styles.header2}>
+          <View className="ml-4 mt-8">
             <Text className="text-white font-calibri text-xl">
-              Pending Group Order Purchase
+              Pending Group Purchase
             </Text>
           </View>
 
-          <View className="bg-neutral-600 m-3 rounded-lg">
-            <View className="m-2 p-2">
-              <View className="flex flex-row justify-between">
-                <Text className="font-lato text-lg text-white">Product</Text>
-                <Text className="font-lato text-lg text-white">Quantity</Text>
-                <Text className="font-lato text-lg text-white">
-                  Total Price
-                </Text>
-              </View>
-              {group.map((product, index) => (
-                <View key={index} style={styles.product}>
-                  <View style={styles.productInfo}>
-                    <Text className="text-white font-lato mt-3">
-                      {product.name}
-                    </Text>
-                  </View>
-                  <View style={styles.groupOrder}>
-                    <Text className="text-white font-lato mt-3">
-                      {product.quantity}
-                    </Text>
-                  </View>
-                  <View style={styles.payment}>
-                    <Text className="text-white font-lato ml-3 mt-3">
-                      ${product.quantity * product.price}
-                    </Text>
+          <View className="m-4 space-y-4">
+            {group.map((product, index) => (
+              <View
+                key={index}
+                className="justify-between items-center flex flex-row bg-neutral-600 rounded-lg p-4"
+              >
+                <View>
+                  <Text className="text-white font-lato text-lg">
+                    {product.name}
+                  </Text>
+                  <Text className="text-white font-lato mt-4 text-[16px]">
+                    Quantity: {product.quantity}
+                  </Text>
+                </View>
+                <View>
+                  <Text className="text-white font-lato self-end text-lg">
+                    ${product.quantity * product.price}
+                  </Text>
+                  <View>
+                    <TouchableOpacity
+                      className="rounded-md w-[90px] h-6 flex-end mt-4"
+                      style={{
+                        alignSelf: "flex-end",
+                        borderColor: "#EE1D52",
+                        backgroundColor: "#EE1D52",
+                      }}
+                      onPress={handleGroupPay}
+                    >
+                      <Text className="text-white font-calibri text-[16px] item-center mx-auto my-auto">
+                        Pay
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
-              ))}
-              <View>
-                <TouchableOpacity
-                  className="rounded-md w-[90px] h-6 flex-end mt-5"
-                  style={{
-                    alignSelf: "flex-end",
-                    borderColor: "#EE1D52",
-                    backgroundColor: "#EE1D52",
-                  }}
-                  onPress={handleGroupPay}
-                >
-                  <Text className="text-white font-calibri item-center mx-auto my-auto">
-                    Pay
-                  </Text>
-                </TouchableOpacity>
               </View>
-            </View>
+            ))}
           </View>
         </ScrollView>
       </View>
@@ -210,11 +195,6 @@ export default function IndivCheckout() {
 
 const styles = StyleSheet.create({
   header: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  header2: {
-    marginTop: 3,
     justifyContent: "center",
     alignItems: "center",
   },

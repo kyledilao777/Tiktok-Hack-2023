@@ -12,7 +12,7 @@ export default function GroupBuyPage() {
   const newUserDiscount = 0.9;
   const groupOrderDiscount = 0.95;
   const router = useRoute();
-  const route = useRouter();
+
   const { productName, price } = router.params;
   const [quantity, setQuantity] = useState(1);
   const [currentProductPrice, setOutputValue] = useState(price);

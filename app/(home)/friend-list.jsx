@@ -4,6 +4,7 @@ import {
   StatusBar,
   View,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { supabase } from "../../lib/supabase";
 import { useEffect, useState } from "react";
@@ -33,9 +34,7 @@ export default function HomeScreen() {
         );
 
         setBuyers(uniqueBuyers);
-      } catch (error) {
-        console.log("Error " + error);
-      }
+      } catch (error) {}
     }
 
     async function fetchContacts() {
@@ -65,9 +64,7 @@ export default function HomeScreen() {
 
           setContacts(matchedContacts);
         }
-      } catch (error) {
-        console.log("Error " + error);
-      }
+      } catch (error) {}
     }
 
     fetchBuyers();
@@ -100,43 +97,52 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }} className="bg-black/80">
+    <ScrollView style={{ flex: 1 }} className="bg-black/80">
       <View className="m-4">
-        <Text className="text-white text-2xl font-lato mx-4 my-4">
+        <Text className="text-white text-2xl font-lato mx-4 mb-3">
           {productName}
         </Text>
-        <Text className=" text-white mx-4 text-lg font-lato">Contacts</Text>
-        {contacts.map((contact, index) => (
-          <View className="bg-bgblue m-4 h-20 rounded-xl">
-            <View className="mx-2 my-auto">
-              <Text key={contact.id} style={styles.title} className="font-lato">
-                {contact.firstName}
-              </Text>
-              <Text
-                key={contact.firstName}
-                className="font-lato"
-                style={styles.phoneNumber}
-              >
-                {contact.phoneNumbers[0].number}
-              </Text>
-              <TouchableOpacity
-                onPress={() =>
-                  router.push({
-                    pathname: "group-purchase",
-                    params: {
-                      productName: productName,
-                      friendName: contact.firstName,
-                    },
-                  })
-                }
-              >
-                <Text className="font-lato"> Payment </Text>
-              </TouchableOpacity>
+
+        <View className="mb-3">
+          <Text className="text-white mx-4 text-lg text-justify">
+            Your friends have also added the {productName} to their cart. Hit
+            them up now to start a group purchase order and grab those bulk
+            discount vouchers for yourselves!
+          </Text>
+        </View>
+        <View className="mb-5">
+          {contacts.map((contact, index) => (
+            <View className="bg-bgblue m-4 h-20 rounded-xl p-2">
+              <View className="mx-2 my-auto">
+                <Text key={index} style={styles.title} className="font-lato">
+                  {contact.firstName}
+                </Text>
+                <Text
+                  key={contact.firstName}
+                  className="font-lato"
+                  style={styles.phoneNumber}
+                >
+                  {contact.phoneNumbers[0].number}
+                </Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    router.push({
+                      pathname: "group-purchase",
+                      params: {
+                        productName: productName,
+                        friendName: contact.firstName,
+                      },
+                    })
+                  }
+                >
+                  <Text className="font-lato"> Payment </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        ))}
+          ))}
+        </View>
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 }
 

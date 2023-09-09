@@ -61,9 +61,8 @@ export default function ProductList() {
 
   return (
     <SafeAreaView className="flex-1 bg-bgblack">
-      <View className="mt-4">
+      <View className="">
         <Image className="h-[500px] w-full mx-auto" source={uri} />
-
         <View className="flex flex-row justify-between bg-bgred py-4">
           <Text className="text-2xl  text-white font-lato pl-4">
             {productName}
@@ -72,7 +71,7 @@ export default function ProductList() {
         </View>
       </View>
 
-      <View className="flex-row justify-center h-full rounded-b-lg bg-bgblack space-x-12 py-20">
+      <View className="flex-row justify-center h-full rounded-b-lg bg-bgblack space-x-16 py-20">
         <TouchableOpacity className="items-center my-2" onPress={handleSubmit}>
           <PlusCircle color="#69C9D0" size={24} />
           <Text className="text-white font-calibri align-middle justify-center pl-1 mt-2">

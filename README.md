@@ -53,17 +53,18 @@ To run the Prototype, follow these instructions:
    Download all the dependencies using `npm install`.
 
 3. **Request Supabase API Key and URL:**
-   Please send a request to kyledaniel.lao@gmail.com for the private Supabase API key and URL. These credentials are required for the app to function properly.
+   Please refer to the uploaded file (on Devpost) for the private Supabase API key and URL. These credentials are required for the app to function properly. If there is an issue, please
+   create an issue in this Repo and we will respond shortly.
 
-4. **Create a `.env` File:**
+5. **Create a `.env` File:**
    Add a new `.env` file to the project root directory to contain the Supabase URL and API key.
 
-5. **Start the Prototype:**
+6. **Start the Prototype:**
    Type the following command into your terminal:
 
    ```shell
    npx expo start --clear
 
-6. **Run on IOS Simulator**
+7. **Run on IOS Simulator**
     - After starting the app, you can run it on an iOS simulator by pressing the i key.
     - Make sure you have Expo Go installed on your laptop to run the app on an **iPhone 14 Pro Max** simulator.
